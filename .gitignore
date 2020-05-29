@@ -12,7 +12,7 @@
 /build
 
 # To keep client secret hidden
-/authorization/server.js
+authorization/server.js
 
 # misc
 .DS_Store
