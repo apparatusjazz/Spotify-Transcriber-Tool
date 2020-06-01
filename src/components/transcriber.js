@@ -1,74 +1,68 @@
 import React, { Component } from 'react';
 import Spotify from 'spotify-web-api-js';
+import { getHashParams } from '../helpers';
+import Slider from './playback-slider';
 
-const spotifyWebApi = new Spotify();
+const spotifyApi = new Spotify();
 
 class Transcriber extends Component {
     constructor(props) {
         super(props);
         this.state = {
             loggedIn: false,
+            active: false,
             playing: false,
             timeStamp: 0,
         }
     }
-    getHashParams() {
-        var hashParams = {};
-        var e, r = /([^&;=]+)=?([^&;]*)/g,
-            q = window.location.hash.substring(1);
-        while (e = r.exec(q)) {
-            hashParams[e[1]] = decodeURIComponent(e[2]);
-        }
-        return hashParams;
-    }
-
-    getNowPlaying() {
-        spotifyWebApi.getMyCurrentPlaybackState()
-            .then((response) => {
-                console.log(response);
-            })
-    }
     togglePlay() {
         if (!this.state.playing) {
-            spotifyWebApi.play();
+            spotifyApi.play();
             this.setState({ playing: true });
         } else {
-            spotifyWebApi.pause();
+            spotifyApi.pause();
             this.setState({ playing: false });
         }
     }
     seekPosition(ms) {
-        spotifyWebApi.seek(ms);
+        spotifyApi.seek(ms);
     }
     skipSeconds(ms) {
-        spotifyWebApi.getMyCurrentPlaybackState()
-            .then((response) => {
-                spotifyWebApi.seek(response.progress_ms + ms);
-            });
+        spotifyApi.getMyCurrentPlaybackState()
+            .then(response => { spotifyApi.seek(response.progress_ms + ms) });
     }
     getCurrentPosition() {
-        spotifyWebApi.getMyCurrentPlaybackState()
+        spotifyApi.getMyCurrentPlaybackState()
             .then((res) => {
                 return res.progress_ms
             })
-            .catch((err) => {
-                console.log(err)
+    }
+    getPlayback() {
+        spotifyApi.getMyCurrentPlaybackState()
+            .then((res) => {
+                if (res.length === 0) {
+                    console.log("You must be using an active Spotify session.");
+                } else {
+                    console.log("Success!");
+                    this.setState({ active: true })
+                }
             })
     }
     componentDidMount() {
-        const params = this.getHashParams();
+        const params = getHashParams();
         if (params.access_token) {
-            spotifyWebApi.setAccessToken(params.access_token);
-        }
-        this.getNowPlaying();
+            spotifyApi.setAccessToken(params.access_token)
+        } else console.log("Not logged in")
+        this.getPlayback();
     }
     render() {
         return (
             <div>
+                <a href={"http://localhost:8888/"}>Log In</a>
                 <button onClick={() => this.seekPosition(0)}>-</button>
                 <button onClick={() => this.togglePlay()}>Play</button>
                 <button onClick={() => this.skipSeconds(1000)}>Skip forward</button>
-
+                <Slider timeStamp={this.state.timeStamp} />
             </div>
         )
     }
