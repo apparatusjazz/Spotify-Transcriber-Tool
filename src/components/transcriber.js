@@ -4,6 +4,7 @@ import { getHashParams } from '../helpers';
 import Slider from './playback-slider';
 
 const spotifyApi = new Spotify();
+const CHECK_INTERVAL = 200;
 
 class Transcriber extends Component {
     constructor(props) {
@@ -14,15 +15,19 @@ class Transcriber extends Component {
             playing: false,
             timeStamp: 0,
         }
+        this.updateTimeStamp = this.updateTimeStamp.bind(this);
     }
     togglePlay() {
-        if (!this.state.playing) {
-            spotifyApi.play();
-            this.setState({ playing: true });
-        } else {
-            spotifyApi.pause();
-            this.setState({ playing: false });
-        }
+        spotifyApi.getMyCurrentPlaybackState()
+            .then(res => {
+                if (!res.is_playing) {
+                    spotifyApi.play();
+                    this.setState({ playing: true });
+                } else {
+                    spotifyApi.pause();
+                    this.setState({ playing: false });
+                }
+            })
     }
     seekPosition(ms) {
         spotifyApi.seek(ms);
@@ -44,9 +49,19 @@ class Transcriber extends Component {
                     console.log("You must be using an active Spotify session.");
                 } else {
                     console.log("Success!");
-                    this.setState({ active: true })
+                    this.setState({
+                        active: true,
+                        timeStamp: res.progress_ms
+                    })
+                    setInterval(this.updateTimeStamp, CHECK_INTERVAL);
                 }
             })
+    }
+    updateTimeStamp() {
+        spotifyApi.getMyCurrentPlaybackState()
+            .then(res => {
+                this.setState({ timeStamp: res.progress_ms });
+            });
     }
     componentDidMount() {
         const params = getHashParams();
@@ -62,7 +77,7 @@ class Transcriber extends Component {
                 <button onClick={() => this.seekPosition(0)}>-</button>
                 <button onClick={() => this.togglePlay()}>Play</button>
                 <button onClick={() => this.skipSeconds(1000)}>Skip forward</button>
-                <Slider timeStamp={this.state.timeStamp} />
+                <Slider timeStamp={this.state.timeStamp / 1000} />
             </div>
         )
     }
