@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Spotify from 'spotify-web-api-js';
 import { getHashParams } from '../helpers';
 import Slider from './playback-slider';
+import TrackInfo from './track-info';
 
 const spotifyApi = new Spotify();
 const CHECK_INTERVAL = 500;         // Interval to update timeStamp
@@ -41,7 +42,7 @@ class Transcriber extends Component {
         this.setState({ timeStamp: ms });
     }
     seekPosition(ms) {
-        spotifyApi.seek(ms).then(res => {
+        spotifyApi.seek(ms).then(() => {
             this.setState({ timeStamp: ms });
         })
     }
@@ -73,7 +74,6 @@ class Transcriber extends Component {
                         timeStamp: res.progress_ms,
                         duration: res.item.duration_ms
                     })
-                    //setInterval(this.updateTimeStamp, CHECK_INTERVAL);
                 }
             })
     }
@@ -82,6 +82,18 @@ class Transcriber extends Component {
             .then(res => {
                 this.setState({ timeStamp: res.progress_ms });
             });
+    }
+    getTrackInfo() {
+        spotifyApi.getMyCurrentPlayingTrack()
+            .then(res => {
+                this.setState({
+                    trackInfo: {
+                        artist: res.item.artists[0].name,
+                        trackName: res.item.name,
+                        albumCover: res.item.album.images[0].url
+                    }
+                })
+            })
     }
     checkCurrent() {
         setInterval(() => {
@@ -106,6 +118,7 @@ class Transcriber extends Component {
         } else console.log("Not logged in")
         this.getPlayback();
         this.checkCurrent();
+        this.getTrackInfo();
     }
     render() {
         return (
@@ -121,6 +134,7 @@ class Transcriber extends Component {
                     changeTimeStamp={this.seekPosition}
                     setTimeStamp={this.setTimeStamp}
                 />
+                <TrackInfo info={this.state.trackInfo} />
             </div>
         )
     }
