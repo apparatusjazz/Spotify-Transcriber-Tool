@@ -4,7 +4,7 @@ import { getHashParams } from '../helpers';
 import Slider from './playback-slider';
 
 const spotifyApi = new Spotify();
-const CHECK_INTERVAL = 1000;         // Interval to update timeStamp
+const CHECK_INTERVAL = 500;         // Interval to update timeStamp
 
 class Transcriber extends Component {
     constructor(props) {
@@ -46,8 +46,13 @@ class Transcriber extends Component {
         })
     }
     skipSeconds(ms) {
-        spotifyApi.getMyCurrentPlaybackState()
-            .then(response => { spotifyApi.seek(response.progress_ms + ms) });
+        spotifyApi.seek(this.state.timeStamp + ms)
+            .then(() => {
+                return spotifyApi.getMyCurrentPlaybackState();
+            }).then(res => {
+                this.setState({ timeStamp: res.progress_ms })
+            })
+
     }
     getCurrentPosition() {
         spotifyApi.getMyCurrentPlaybackState()
@@ -64,10 +69,11 @@ class Transcriber extends Component {
                     console.log("Success!");
                     this.setState({
                         active: true,
+                        playing: res.is_playing,
                         timeStamp: res.progress_ms,
                         duration: res.item.duration_ms
                     })
-                    setInterval(this.updateTimeStamp, CHECK_INTERVAL);
+                    //setInterval(this.updateTimeStamp, CHECK_INTERVAL);
                 }
             })
     }
@@ -77,12 +83,29 @@ class Transcriber extends Component {
                 this.setState({ timeStamp: res.progress_ms });
             });
     }
+    checkCurrent() {
+        setInterval(() => {
+            spotifyApi.getMyCurrentPlaybackState()
+                .then(res => {
+                    // if (res.progress_ms < this.state.timeStamp + 1000 || res.progress_ms > this.state.timeStamp - 1000) {
+                    //     this.setState({ timeStamp: res.progress_ms });
+                    // }
+                    if (res.is_playing) {
+                        this.setState({
+                            timeStamp: this.state.timeStamp + CHECK_INTERVAL,
+                            playing: res.is_playing
+                        });
+                    }
+                })
+        }, CHECK_INTERVAL);
+    }
     componentDidMount() {
         const params = getHashParams();
         if (params.access_token) {
             spotifyApi.setAccessToken(params.access_token)
         } else console.log("Not logged in")
         this.getPlayback();
+        this.checkCurrent();
     }
     render() {
         return (
