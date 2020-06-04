@@ -5,7 +5,7 @@ import Slider from './playback-slider';
 import TrackInfo from './track-info';
 
 const spotifyApi = new Spotify();
-const CHECK_INTERVAL = 500;         // Interval to update timeStamp
+const CHECK_INTERVAL = 1000;         // Interval to update timeStamp
 
 class Transcriber extends Component {
     constructor(props) {
@@ -36,7 +36,7 @@ class Transcriber extends Component {
                     spotifyApi.pause();
                     this.setState({ playing: false });
                 }
-            })
+            }, (err) => console.log("A problem ocurred..."))
     }
     setTimeStamp(ms) {
         this.setState({ timeStamp: ms });
@@ -63,19 +63,21 @@ class Transcriber extends Component {
     }
     getPlayback() {
         spotifyApi.getMyCurrentPlaybackState()
-            .then((res) => {
-                if (res.length === 0) {
-                    console.log("You must be using an active Spotify session.");
-                } else {
-                    console.log("Success!");
-                    this.setState({
-                        active: true,
-                        playing: res.is_playing,
-                        timeStamp: res.progress_ms,
-                        duration: res.item.duration_ms
-                    })
-                }
-            })
+            .then(
+                (res) => {
+                    if (res.length === 0) {
+                        console.log("You must be using an active Spotify session.");
+                    } else {
+                        console.log("Success!");
+                        this.setState({
+                            active: true,
+                            playing: res.is_playing,
+                            timeStamp: res.progress_ms,
+                            duration: res.item.duration_ms
+                        })
+                    }
+                }, () => console.log("Not logged in!"))
+
     }
     updateTimeStamp() {
         spotifyApi.getMyCurrentPlaybackState()
@@ -93,29 +95,31 @@ class Transcriber extends Component {
                         albumCover: res.item.album.images[0].url
                     }
                 })
-            })
+            }, (err) => console.log("A problem ocurred..."))
     }
     checkCurrent() {
         setInterval(() => {
-            spotifyApi.getMyCurrentPlaybackState()
-                .then(res => {
-                    // if (res.progress_ms < this.state.timeStamp + 1000 || res.progress_ms > this.state.timeStamp - 1000) {
-                    //     this.setState({ timeStamp: res.progress_ms });
-                    // }
-                    if (res.is_playing) {
-                        this.setState({
-                            timeStamp: this.state.timeStamp + CHECK_INTERVAL,
-                            playing: res.is_playing
-                        });
-                    }
-                })
+            if (this.state.active && this.state.playing) {  //temporary for testing
+                spotifyApi.getMyCurrentPlaybackState()
+                    .then(res => {
+                        // if (res.progress_ms < this.state.timeStamp + 1000 || res.progress_ms > this.state.timeStamp - 1000) {
+                        //     this.setState({ timeStamp: res.progress_ms });
+                        // }
+                        if (res.is_playing) {
+                            this.setState({
+                                timeStamp: this.state.timeStamp + CHECK_INTERVAL,
+                                playing: res.is_playing
+                            });
+                        }
+                    })
+            }
         }, CHECK_INTERVAL);
     }
     componentDidMount() {
         const params = getHashParams();
         if (params.access_token) {
             spotifyApi.setAccessToken(params.access_token)
-        } else console.log("Not logged in")
+        }
         this.getPlayback();
         this.checkCurrent();
         this.getTrackInfo();
