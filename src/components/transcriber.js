@@ -125,13 +125,18 @@ class Transcriber extends Component {
         this.getTrackInfo();
     }
     render() {
+        let seconds = Math.floor(this.state.timeStamp / 1000);
+        let minutes = Math.floor(seconds / 60);
+        let remainingSec = seconds % 60;
+        let str = ":";
+        if (remainingSec < 10) str = ":0";
         return (
             <div>
                 <a href={"http://localhost:8888/"}>Log In</a>
                 <button onClick={() => this.seekPosition(0)}>-</button>
                 <button onClick={() => this.togglePlay()}>Play</button>
                 <button onClick={() => this.skipSeconds(1000)}>Skip forward</button>
-                <p>{this.state.timeStamp / 1000}</p>
+                <p>{minutes}{str}{remainingSec}</p>
                 <Slider
                     timeStamp={this.state.timeStamp / 1000}
                     trackLength={this.state.duration / 1000}
