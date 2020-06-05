@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-
+import '../css/track-info.css'
 
 class TrackInfo extends Component {
     render() {
         return (
-            <div>
-                <img src={this.props.info.albumCover} style={{ width: "200px" }} />
-                <p>{this.props.info.artist}</p>
+            <div className="track-info">
+                <img src={this.props.info.albumCover} alt="album cover" style={{ width: "220px" }} />
                 <p>{this.props.info.trackName}</p>
+                <p>{this.props.info.artist}</p>
             </div>
         )
     }
