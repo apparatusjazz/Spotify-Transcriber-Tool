@@ -3,6 +3,7 @@ import Spotify from 'spotify-web-api-js';
 import { getHashParams } from '../helpers';
 import Slider from './playback-slider';
 import TrackInfo from './track-info';
+import SavePoint from './save-point';
 
 const spotifyApi = new Spotify();
 const CHECK_INTERVAL = 1000;         // Interval to update timeStamp
@@ -16,6 +17,7 @@ class Transcriber extends Component {
             playing: false,
             timeStamp: 0,
             duration: 0,
+            savedPoints: [],
             trackInfo: {
                 artist: '',
                 trackName: '',
@@ -25,6 +27,8 @@ class Transcriber extends Component {
         this.updateTimeStamp = this.updateTimeStamp.bind(this);
         this.seekPosition = this.seekPosition.bind(this);
         this.setTimeStamp = this.setTimeStamp.bind(this);
+        this.savePoint = this.savePoint.bind(this);
+        this.skipToPoint = this.skipToPoint.bind(this);
     }
     togglePlay() {
         spotifyApi.getMyCurrentPlaybackState()
@@ -54,6 +58,39 @@ class Transcriber extends Component {
                 this.setState({ timeStamp: res.progress_ms })
             })
 
+    }
+    savePoint() {
+        spotifyApi.getMyCurrentPlaybackState()
+            .then(
+                (res) => {
+                    let points = this.state.savedPoints;
+                    if (!points.includes(res.progress_ms)) {
+                        points.push(res.progress_ms);
+                        this.setState({ savedPoints: points });
+                    }
+                },
+                (err) => { console.log("An error occured!") }
+            )
+    }
+    skipToPoint(val) {
+        let current = this.state.timeStamp;
+        let points = this.state.savedPoints;
+        let seek = 0;
+        points.sort((a, b) => { return a - b });
+        console.log(current, points)
+
+        for (let i = 0; i < points.length - 1; i++) {
+            if (current > points[i] && current < points[i + 1]) {
+                if (val === 1) {
+                    seek = points[i + 1];
+                } else {
+                    seek = points[i];
+                }
+                break;
+            }
+        }
+        console.log(seek)
+        this.seekPosition(seek);
     }
     getCurrentPosition() {
         spotifyApi.getMyCurrentPlaybackState()
@@ -142,6 +179,10 @@ class Transcriber extends Component {
                     trackLength={this.state.duration / 1000}
                     changeTimeStamp={this.seekPosition}
                     setTimeStamp={this.setTimeStamp}
+                />
+                <SavePoint
+                    savePoint={this.savePoint}
+                    skipToPoint={this.skipToPoint}
                 />
                 <TrackInfo info={this.state.trackInfo} />
             </div>
