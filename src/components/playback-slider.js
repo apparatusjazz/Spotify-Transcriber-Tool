@@ -4,13 +4,11 @@ import { Slider } from '@material-ui/core'
 
 class PlaybackSlider extends Component {
     handleMouseUp(event) {
-        console.log(event.target.getAttribute("aria-valuenow"))
         let time = parseInt(event.target.getAttribute("aria-valuenow"));
         this.props.changeTimeStamp(time * 1000);
     }
     handleChange(e, value) {
         this.props.setTimeStamp(value * 1000);
-
     }
     render() {
         return (
