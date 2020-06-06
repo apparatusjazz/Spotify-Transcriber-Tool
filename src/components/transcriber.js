@@ -66,6 +66,7 @@ class Transcriber extends Component {
                     let points = this.state.savedPoints;
                     if (!points.includes(res.progress_ms)) {
                         points.push(res.progress_ms);
+                        points.sort((a, b) => { return a - b });
                         this.setState({ savedPoints: points });
                     }
                 },
@@ -76,20 +77,40 @@ class Transcriber extends Component {
         let current = this.state.timeStamp;
         let points = this.state.savedPoints;
         let seek = 0;
-        points.sort((a, b) => { return a - b });
-        console.log(current, points)
 
-        for (let i = 0; i < points.length - 1; i++) {
-            if (current > points[i] && current < points[i + 1]) {
-                if (val === 1) {
-                    seek = points[i + 1];
-                } else {
-                    seek = points[i];
+        if (points.length > 1) {
+            if (current <= points[0]) {
+                if (val === 0)
+                    seek = 0;
+                else {
+                    if (current === points[0]) seek = points[1];
+                    else seek = points[0];
                 }
-                break;
+            } else if (current >= points[points.length - 1]) {
+                if (val === 0)
+                    seek = points[points.length - 2];
+                else seek = current;
+            } else {
+                for (let i = 0; i < points.length; i++) {
+                    if (points[i] >= current) {
+                        if (val === 0) {
+                            seek = points[i - 1];
+                        } else {
+                            if (points[i] > current)
+                                seek = points[i];
+                            else seek = points[i + 1]
+                        }
+                        break;
+                    }
+                }
+            }
+        } else {
+            if (val === 0 && current <= points[0]) {
+                seek = 0;
+            } else {
+                seek = current;
             }
         }
-        console.log(seek)
         this.seekPosition(seek);
     }
     getCurrentPosition() {
