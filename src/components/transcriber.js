@@ -88,8 +88,11 @@ class Transcriber extends Component {
                     else seek = points[0];
                 }
             } else if (current >= points[points.length - 1]) {
-                if (val === 0)
-                    seek = points[points.length - 2];
+                if (val === 0) {
+                    if (current === points[points.length - 1])
+                        seek = points[points.length - 2];
+                    else seek = points[points.length - 1];
+                }
                 else seek = current;
             } else {
                 for (let i = 0; i < points.length; i++) {
