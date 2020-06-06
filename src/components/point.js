@@ -5,11 +5,10 @@ class Point extends Component {
     render() {
 
         return (
-            <div>
-                <p
-                    className="point"
-                    style={{ left: this.props.left }} >|</p>
-            </div>
+            <p
+                className="point"
+                style={{ left: this.props.left }} >|
+            </p>
         )
     }
 }
