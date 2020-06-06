@@ -4,6 +4,7 @@ import { getHashParams } from '../helpers';
 import Slider from './playback-slider';
 import TrackInfo from './track-info';
 import SavePoint from './save-point';
+import Point from './point';
 
 const spotifyApi = new Spotify();
 const CHECK_INTERVAL = 1000;         // Interval to update timeStamp
@@ -113,6 +114,7 @@ class Transcriber extends Component {
         }
         this.seekPosition(seek);
     }
+
     getCurrentPosition() {
         spotifyApi.getMyCurrentPlaybackState()
             .then((res) => {
@@ -188,8 +190,15 @@ class Transcriber extends Component {
         let remainingSec = seconds % 60;
         let str = ":";
         if (remainingSec < 10) str = ":0";
+
+        const point = ms => {
+            return <Point key={ms} left={`${((ms - 1000) / this.state.duration) * 100}%`} />
+        };
         return (
             <div>
+                {this.state.savedPoints.map(ms => {
+                    return point(ms);
+                })}
                 <a href={"http://localhost:8888/"}>Log In</a>
                 <button onClick={() => this.seekPosition(0)}>-</button>
                 <button onClick={() => this.togglePlay()}>Play</button>
