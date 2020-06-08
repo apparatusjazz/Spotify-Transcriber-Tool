@@ -30,6 +30,7 @@ class Transcriber extends Component {
         this.setTimeStamp = this.setTimeStamp.bind(this);
         this.savePoint = this.savePoint.bind(this);
         this.skipToPoint = this.skipToPoint.bind(this);
+        this.deletePoint = this.deletePoint.bind(this);
     }
     togglePlay() {
         spotifyApi.getMyCurrentPlaybackState()
@@ -117,7 +118,12 @@ class Transcriber extends Component {
         }
         this.seekPosition(seek);
     }
-
+    deletePoint(key) {
+        let newPoints = this.state.savedPoints.filter(val => {
+            return val !== key;
+        })
+        this.setState({ savedPoints: newPoints });
+    }
     getCurrentPosition() {
         spotifyApi.getMyCurrentPlaybackState()
             .then((res) => {
@@ -195,7 +201,13 @@ class Transcriber extends Component {
         if (remainingSec < 10) str = ":0";
 
         const point = ms => {
-            return <Point key={ms} left={`${((ms - 1000) / this.state.duration) * 100}%`} />
+            let left = `${((ms - 1000) / this.state.duration) * 100}%`;
+            return <Point
+                key={ms}
+                ms={ms}
+                left={left}
+                deletePoint={this.deletePoint}
+            />
         };
         return (
             <div>
