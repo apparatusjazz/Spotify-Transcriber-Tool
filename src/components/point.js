@@ -5,7 +5,7 @@ class Point extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            hoverActive: false
+            hoverActive: false,
         }
     }
     handleClick = () => {
@@ -17,6 +17,9 @@ class Point extends Component {
     handleMouseLeave = () => {
         this.setState({ hoverActive: false })
     }
+    addLoopPoint = () => {
+        this.props.addLoopPoint(this.props.ms);
+    }
     render() {
         let displayStyle = this.state.hoverActive ? "inline-block" : "none";
 
@@ -24,17 +27,19 @@ class Point extends Component {
             <div className="point"
                 onMouseOver={this.handleMouseOver}
                 onMouseLeave={this.handleMouseLeave}
-                style={{ left: this.props.left }} >
-                <button
-                    className="dlt-btn"
-                    onClick={this.handleClick}
-                    style={{ display: displayStyle }}
-                >
-                    x
-                </button>
-                <p
-                    className="point"
-                >|
+                style={{ left: this.props.left }}
+            >
+                <div className="tooltip" style={{ display: displayStyle }}>
+                    <button onClick={this.addLoopPoint}>
+                        s
+                    </button>
+                    <button onClick={this.handleClick}>
+                        x
+                    </button>
+                </div>
+
+                <p className="point">
+                    |
                 </p>
             </div>
 
