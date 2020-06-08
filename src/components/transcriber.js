@@ -211,9 +211,11 @@ class Transcriber extends Component {
         };
         return (
             <div>
-                {this.state.savedPoints.map(ms => {
-                    return point(ms);
-                })}
+                <div className="saved-points">
+                    {this.state.savedPoints.map(ms => {
+                        return point(ms);
+                    })}
+                </div>
                 <a href={"http://localhost:8888/"}>Log In</a>
                 <button onClick={() => this.seekPosition(0)}>-</button>
                 <button onClick={() => this.togglePlay()}>Play</button>
