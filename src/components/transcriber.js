@@ -80,10 +80,10 @@ class Transcriber extends Component {
         let points = this.state.savedPoints;
         let seek = 0;
 
-        if (points.length > 1) {
+        if (points.length >= 1) {
             if (current <= points[0]) {
                 if (val === 0)
-                    seek = 0;
+                    return;
                 else {
                     if (current === points[0]) seek = points[1];
                     else seek = points[0];
@@ -94,7 +94,7 @@ class Transcriber extends Component {
                         seek = points[points.length - 2];
                     else seek = points[points.length - 1];
                 }
-                else seek = current;
+                else return;
             } else {
                 for (let i = 0; i < points.length; i++) {
                     if (points[i] >= current) {
@@ -109,13 +109,7 @@ class Transcriber extends Component {
                     }
                 }
             }
-        } else {
-            if (val === 0 && current <= points[0]) {
-                seek = 0;
-            } else {
-                seek = current;
-            }
-        }
+        } else return;
         this.seekPosition(seek);
     }
     deletePoint(key) {
