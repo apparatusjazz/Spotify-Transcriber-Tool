@@ -19,6 +19,8 @@ class Transcriber extends Component {
             timeStamp: 0,
             duration: 0,
             savedPoints: [],
+            loopPoints: [],
+            loopActive: false,
             trackInfo: {
                 artist: '',
                 trackName: '',
@@ -31,6 +33,9 @@ class Transcriber extends Component {
         this.savePoint = this.savePoint.bind(this);
         this.skipToPoint = this.skipToPoint.bind(this);
         this.deletePoint = this.deletePoint.bind(this);
+        this.addLoopPoint = this.addLoopPoint.bind(this);
+        this.toggleLoop = this.toggleLoop.bind(this);
+        this.removeLoopPoints = this.removeLoopPoints.bind(this);
     }
     togglePlay() {
         spotifyApi.getMyCurrentPlaybackState()
@@ -115,8 +120,27 @@ class Transcriber extends Component {
     deletePoint(key) {
         let newPoints = this.state.savedPoints.filter(val => {
             return val !== key;
-        })
+        });
+        if (this.state.loopPoints.includes(key)) {
+            let newLoopPoints = this.state.loopPoints.filter(el => {
+                return el !== key;
+            })
+            this.setState({ loopPoints: newLoopPoints });
+        }
         this.setState({ savedPoints: newPoints });
+    }
+    addLoopPoint(point) {
+        if (this.state.loopPoints.length < 2 && this.state.loopPoints[0] !== point) {
+            let newPoints = this.state.loopPoints;
+            newPoints.push(point);
+            this.setState({ loopPoints: newPoints })
+        }
+    }
+    removeLoopPoints() {
+        this.setState({ loopPoints: [] });
+    }
+    toggleLoop() {
+        this.setState({ loopActive: !this.state.loopActive });
     }
     getCurrentPosition() {
         spotifyApi.getMyCurrentPlaybackState()
@@ -165,14 +189,23 @@ class Transcriber extends Component {
             if (this.state.active && this.state.playing) {  //temporary for testing
                 spotifyApi.getMyCurrentPlaybackState()
                     .then(res => {
-                        // if (res.progress_ms < this.state.timeStamp + 1000 || res.progress_ms > this.state.timeStamp - 1000) {
-                        //     this.setState({ timeStamp: res.progress_ms });
-                        // }
+
                         if (res.is_playing) {
-                            this.setState({
-                                timeStamp: this.state.timeStamp + CHECK_INTERVAL,
-                                playing: res.is_playing
-                            });
+                            let ts = this.state.timeStamp;
+                            if (this.state.loopActive && this.state.loopPoints.length === 2) {
+                                if (this.state.timeStamp > this.state.loopPoints[1]) {
+                                    ts = this.state.loopPoints[0];
+                                    spotifyApi.seek(ts);
+                                    this.setState({ timeStamp: ts });
+                                } else {
+                                    this.setState({ timeStamp: ts + CHECK_INTERVAL });
+                                }
+                            } else {
+                                this.setState({
+                                    timeStamp: ts + CHECK_INTERVAL,
+                                    playing: res.is_playing
+                                });
+                            }
                         }
                     })
             }
@@ -201,8 +234,10 @@ class Transcriber extends Component {
                 ms={ms}
                 left={left}
                 deletePoint={this.deletePoint}
+                addLoopPoint={this.addLoopPoint}
             />
         };
+
         return (
             <div>
                 <div className="saved-points">
@@ -224,6 +259,8 @@ class Transcriber extends Component {
                 <SavePoint
                     savePoint={this.savePoint}
                     skipToPoint={this.skipToPoint}
+                    toggleLoop={this.toggleLoop}
+                    removeLoopPoints={this.removeLoopPoints}
                 />
                 <TrackInfo info={this.state.trackInfo} />
             </div>
