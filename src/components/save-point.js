@@ -10,12 +10,20 @@ class SavePoint extends Component {
     handleNext() {
         this.props.skipToPoint(1);
     }
+    handleToggle() {
+        this.props.toggleLoop();
+    }
+    handleDelete() {
+        this.props.removeLoopPoints();
+    }
     render() {
         return (
             <div>
                 <button onClick={() => this.handleBack()}>Last Point</button>
                 <button onClick={() => this.handleClick()}>Save Point</button>
                 <button onClick={() => this.handleNext()}>Next Point</button>
+                <button onClick={() => this.handleToggle()}>Toggle Loop</button>
+                <button onClick={() => this.handleDelete()}>Delete Loop</button>
             </div>
         )
     }
