@@ -1,8 +1,11 @@
 .point {
+    height: 10px;
+    width: 5px;
     position: fixed;
     top: 17%;
 }
 
 .dlt-btn {
+    display: none;
     top: 15%;
 }
