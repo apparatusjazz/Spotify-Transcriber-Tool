@@ -5,6 +5,7 @@ import Slider from './playback-slider';
 import TrackInfo from './track-info';
 import SavePoint from './save-point';
 import Point from './point';
+import TimeStamp from './timestamp';
 
 const spotifyApi = new Spotify();
 const CHECK_INTERVAL = 1000;         // Interval to update timeStamp
@@ -191,15 +192,13 @@ class Transcriber extends Component {
                     .then(res => {
 
                         if (res.is_playing) {
-                            let ts = this.state.timeStamp;
-                            if (this.state.loopActive && this.state.loopPoints.length === 2) {
-                                if (this.state.timeStamp > this.state.loopPoints[1]) {
-                                    ts = this.state.loopPoints[0];
-                                    spotifyApi.seek(ts);
-                                    this.setState({ timeStamp: ts });
-                                } else {
-                                    this.setState({ timeStamp: ts + CHECK_INTERVAL });
-                                }
+                            let ts = this.state.timeStamp;  //Handle looping
+                            if (this.state.loopActive && this.state.loopPoints.length === 2 &&
+                                this.state.timeStamp > this.state.loopPoints[1]) {
+
+                                ts = this.state.loopPoints[0];
+                                spotifyApi.seek(ts);
+                                this.setState({ timeStamp: ts });
                             } else {
                                 this.setState({
                                     timeStamp: ts + CHECK_INTERVAL,
@@ -221,11 +220,6 @@ class Transcriber extends Component {
         this.getTrackInfo();
     }
     render() {
-        let seconds = Math.floor(this.state.timeStamp / 1000);
-        let minutes = Math.floor(seconds / 60);
-        let remainingSec = seconds % 60;
-        let str = ":";
-        if (remainingSec < 10) str = ":0";
 
         const point = ms => {
             let left = `${((ms - 1000) / this.state.duration) * 100}%`;
@@ -249,7 +243,7 @@ class Transcriber extends Component {
                 <button onClick={() => this.seekPosition(0)}>-</button>
                 <button onClick={() => this.togglePlay()}>Play</button>
                 <button onClick={() => this.skipSeconds(1000)}>Skip forward</button>
-                <p>{minutes}{str}{remainingSec}</p>
+                <TimeStamp timeStamp={this.state.timeStamp} />
                 <Slider
                     timeStamp={this.state.timeStamp / 1000}
                     trackLength={this.state.duration / 1000}
