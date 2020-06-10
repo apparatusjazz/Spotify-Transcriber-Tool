@@ -134,6 +134,9 @@ class Transcriber extends Component {
         if (this.state.loopPoints.length < 2 && this.state.loopPoints[0] !== point) {
             let newPoints = this.state.loopPoints;
             newPoints.push(point);
+            if (newPoints.length === 2) {
+                newPoints.sort((a, b) => { return a - b });
+            }
             this.setState({ loopPoints: newPoints })
         }
     }
