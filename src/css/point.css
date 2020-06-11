@@ -1,11 +1,49 @@
 .point {
     height: 10px;
-    width: 5px;
+    width: 20px;
     position: fixed;
-    top: 17%;
+    top: 13.2%;
+
+    z-index: 1;
 }
 
-.dlt-btn {
-    display: none;
-    top: 15%;
+.tooltip {
+    visibility: hidden;
+    width: 50px;
+    background-color: #414141;
+    color: #fff;
+    border-radius: 8px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 10%;
+    margin: 0px 0px 0px -20px;
+    opacity: 0;
+    transition: all ease 1s; 
+}
+
+.tooltip button {
+    background-color: transparent;
+    color: white;
+    border: none;
+}
+
+.tooltip button:active {
+    color: rgb(204, 204, 204);
+}
+
+.tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #414141 transparent transparent transparent;
+}
+
+.point:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
 }
