@@ -33,6 +33,7 @@ class Transcriber extends Component {
         this.setTimeStamp = this.setTimeStamp.bind(this);
         this.savePoint = this.savePoint.bind(this);
         this.skipToPoint = this.skipToPoint.bind(this);
+        this.deletePoint = this.deletePoint.bind(this);
         this.addLoopPoint = this.addLoopPoint.bind(this);
         this.toggleLoop = this.toggleLoop.bind(this);
         this.removeLoopPoints = this.removeLoopPoints.bind(this);
@@ -71,8 +72,8 @@ class Transcriber extends Component {
             .then(
                 (res) => {
                     let points = this.state.savedPoints;
-                    if (!points.includes(res.progress_ms)) {
-                        points.push(res.progress_ms);
+                    if (!points.includes(res.progress_ms) && res.progress_ms > 1300) {
+                        points.push(res.progress_ms - 1300);
                         points.sort((a, b) => { return a - b });
                         this.setState({ savedPoints: points });
                     }
@@ -117,7 +118,19 @@ class Transcriber extends Component {
         } else return;
         this.seekPosition(seek);
     }
-    addLoopPoint(point) {   // Toggle loop point
+    deletePoint(key) {
+        let newPoints = this.state.savedPoints.filter(val => {
+            return val !== key;
+        });
+        if (this.state.loopPoints.includes(key)) {
+            let newLoopPoints = this.state.loopPoints.filter(el => {
+                return el !== key;
+            })
+            this.setState({ loopPoints: newLoopPoints });
+        }
+        this.setState({ savedPoints: newPoints });
+    }
+    addLoopPoint(point) {
         let newPoints = this.state.loopPoints;
         if (this.state.loopPoints.includes(point)) {
             newPoints = this.state.savedPoints.filter(val => {
@@ -189,7 +202,7 @@ class Transcriber extends Component {
                         if (res.is_playing) {
                             let ts = this.state.timeStamp;  //Handle looping
                             if (this.state.loopActive && this.state.loopPoints.length === 2 &&
-                                this.state.timeStamp > this.state.loopPoints[1]) {
+                                this.state.timeStamp > this.state.loopPoints[1] - 1500) {
 
                                 ts = this.state.loopPoints[0];
                                 spotifyApi.seek(ts);
