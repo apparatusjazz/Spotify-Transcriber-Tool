@@ -33,7 +33,6 @@ class Transcriber extends Component {
         this.setTimeStamp = this.setTimeStamp.bind(this);
         this.savePoint = this.savePoint.bind(this);
         this.skipToPoint = this.skipToPoint.bind(this);
-        this.deletePoint = this.deletePoint.bind(this);
         this.addLoopPoint = this.addLoopPoint.bind(this);
         this.toggleLoop = this.toggleLoop.bind(this);
         this.removeLoopPoints = this.removeLoopPoints.bind(this);
@@ -118,27 +117,20 @@ class Transcriber extends Component {
         } else return;
         this.seekPosition(seek);
     }
-    deletePoint(key) {
-        let newPoints = this.state.savedPoints.filter(val => {
-            return val !== key;
-        });
-        if (this.state.loopPoints.includes(key)) {
-            let newLoopPoints = this.state.loopPoints.filter(el => {
-                return el !== key;
-            })
-            this.setState({ loopPoints: newLoopPoints });
+    addLoopPoint(point) {   // Toggle loop point
+        let newPoints = this.state.loopPoints;
+        if (this.state.loopPoints.includes(point)) {
+            newPoints = this.state.savedPoints.filter(val => {
+                return val !== point;
+            });
         }
-        this.setState({ savedPoints: newPoints });
-    }
-    addLoopPoint(point) {
-        if (this.state.loopPoints.length < 2 && this.state.loopPoints[0] !== point) {
-            let newPoints = this.state.loopPoints;
+        else if (this.state.loopPoints.length < 2 && this.state.loopPoints[0] !== point) {
             newPoints.push(point);
             if (newPoints.length === 2) {
                 newPoints.sort((a, b) => { return a - b });
             }
-            this.setState({ loopPoints: newPoints })
         }
+        this.setState({ loopPoints: newPoints })
     }
     removeLoopPoints() {
         this.setState({ loopPoints: [] });
@@ -232,6 +224,7 @@ class Transcriber extends Component {
                 left={left}
                 deletePoint={this.deletePoint}
                 addLoopPoint={this.addLoopPoint}
+                loopPoints={this.state.loopPoints}
             />
         };
 

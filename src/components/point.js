@@ -10,7 +10,7 @@ class Point extends Component {
         this.props.addLoopPoint(this.props.ms);
     }
     render() {
-
+        let toggleAddLoopPoint = this.props.loopPoints.includes(this.props.ms) ? "-" : "+";
         return (
             <div className="point"
                 onMouseOver={this.handleMouseOver}
@@ -20,7 +20,7 @@ class Point extends Component {
                 <div className="tooltip" >
                     <TimeStamp timeStamp={this.props.ms} />
                     <button onClick={this.addLoopPoint}>
-                        +
+                        {toggleAddLoopPoint}
                     </button>
                     <button onClick={this.handleClick}>
                         x
