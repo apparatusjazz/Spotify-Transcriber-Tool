@@ -1,3 +1,5 @@
+This app is a transcribing tool for Spotify aimed at musicians to help transcribe and learn music.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
