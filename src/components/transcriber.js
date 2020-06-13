@@ -6,6 +6,7 @@ import TrackInfo from './track-info';
 import SavePoint from './save-point';
 import Point from './point';
 import TimeStamp from './timestamp';
+import Play from './play';
 
 const spotifyApi = new Spotify();
 const CHECK_INTERVAL = 1000;         // Interval to update timeStamp
@@ -28,6 +29,7 @@ class Transcriber extends Component {
                 albumCover: ''
             }
         }
+        this.togglePlay = this.togglePlay.bind(this);
         this.updateTimeStamp = this.updateTimeStamp.bind(this);
         this.seekPosition = this.seekPosition.bind(this);
         this.setTimeStamp = this.setTimeStamp.bind(this);
@@ -73,7 +75,7 @@ class Transcriber extends Component {
                 (res) => {
                     let points = this.state.savedPoints;
                     if (!points.includes(res.progress_ms) && res.progress_ms > 1300) {
-                        points.push(res.progress_ms - 1300);
+                        points.push(res.progress_ms - 700);
                         points.sort((a, b) => { return a - b });
                         this.setState({ savedPoints: points });
                     }
@@ -248,9 +250,9 @@ class Transcriber extends Component {
                         return point(ms);
                     })}
                 </div>
-                <a href={"http://localhost:8888/"}>Log In</a>
+                <a href={"http://localhost:8888/login"}>Log In</a>
                 <button onClick={() => this.seekPosition(0)}>-</button>
-                <button onClick={() => this.togglePlay()}>Play</button>
+                <Play togglePlay={this.togglePlay} playing={this.state.playing} />
                 <button onClick={() => this.skipSeconds(1000)}>Skip forward</button>
                 <TimeStamp timeStamp={this.state.timeStamp} />
                 <Slider
