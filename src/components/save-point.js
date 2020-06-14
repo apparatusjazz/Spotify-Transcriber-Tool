@@ -13,9 +13,6 @@ class SavePoint extends Component {
     handleToggle() {
         this.props.toggleLoop();
     }
-    handleDelete() {
-        this.props.removeLoopPoints();
-    }
     render() {
         return (
             <div>
@@ -23,7 +20,6 @@ class SavePoint extends Component {
                 <button onClick={() => this.handleClick()}>Save Point</button>
                 <button onClick={() => this.handleNext()}>Next Point</button>
                 <button onClick={() => this.handleToggle()}>Toggle Loop</button>
-                <button onClick={() => this.handleDelete()}>Delete Loop</button>
             </div>
         )
     }
