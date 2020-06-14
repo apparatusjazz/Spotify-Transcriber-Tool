@@ -5,15 +5,14 @@
     background: rgb(48, 48, 48);
 }
 
-
 .button {
-    display: inline-block;
     margin-right: 40px;
     margin-left: 40px;
     background: none;
     width: 50px;
     height: 50px;
     border-radius: 100%;
+    border-width: 1px;
     border-style: solid;
     border-color: #fff;
     position: relative; 

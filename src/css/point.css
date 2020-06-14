@@ -1,6 +1,6 @@
 .point {
     height: 10px;
-    width: 20px;
+    width: 10px;
     position: fixed;
     top: 13.2%;
 
@@ -28,19 +28,13 @@
     border: none;
 }
 
-.tooltip button:active {
-    color: rgb(204, 204, 204);
+.tooltip button:hover {
+    background-color: #5f5f5f;
+    border-radius: 4px;
 }
 
-.tooltip::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #414141 transparent transparent transparent;
+.tooltip button:active {
+    color: rgb(204, 204, 204);
 }
 
 .point:hover .tooltip {
