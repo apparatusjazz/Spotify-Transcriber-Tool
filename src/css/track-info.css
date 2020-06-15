@@ -1,0 +1,17 @@
+.track-info { 
+    display: flex;
+    text-align: justify;
+    padding-left: 5%;
+}
+
+.album-img {
+    width: 100px;
+}
+
+.text {
+    padding-left: 10px;
+}
+
+p {
+    font-size: 14px;
+}
