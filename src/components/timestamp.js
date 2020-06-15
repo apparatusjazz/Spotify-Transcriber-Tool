@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import '../css/timestamp.css'
 
 class TimeStamp extends Component {
 
@@ -9,7 +10,7 @@ class TimeStamp extends Component {
         let str = ":";
         if (remainingSec < 10) str = ":0";
         return (
-            <div>
+            <div className="timestamp">
                 {minutes}{str}{remainingSec}
             </div>
         )
