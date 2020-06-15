@@ -261,13 +261,13 @@ class Transcriber extends Component {
                     changeTimeStamp={this.seekPosition}
                     setTimeStamp={this.setTimeStamp}
                 />
+                <TrackInfo info={this.state.trackInfo} />
                 <SavePoint
                     savePoint={this.savePoint}
                     skipToPoint={this.skipToPoint}
                     toggleLoop={this.toggleLoop}
                     removeLoopPoints={this.removeLoopPoints}
                 />
-                <TrackInfo info={this.state.trackInfo} />
             </div>
         )
     }
