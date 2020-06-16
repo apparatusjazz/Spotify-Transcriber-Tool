@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import '../css/save-point.css'
 
 class SavePoint extends Component {
     handleBack() {
@@ -15,10 +16,10 @@ class SavePoint extends Component {
     }
     render() {
         return (
-            <div>
-                <button onClick={() => this.handleBack()}>Last Point</button>
-                <button onClick={() => this.handleClick()}>Save Point</button>
-                <button onClick={() => this.handleNext()}>Next Point</button>
+            <div className="save-ctrls">
+                <button className="to-pnt" onClick={() => this.handleBack()}>&lt;</button>
+                <button className="save-pnt" onClick={() => this.handleClick()}>+</button>
+                <button className="to-pnt" onClick={() => this.handleNext()}>&gt;</button>
                 <button onClick={() => this.handleToggle()}>Toggle Loop</button>
             </div>
         )
