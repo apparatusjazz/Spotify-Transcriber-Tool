@@ -8,6 +8,13 @@
     width: 100px;
 }
 
+@media screen and (max-width: 600px) {
+    .album-img {
+        width: 60px;
+        height: 60px;
+    }
+  }
+
 .text {
     padding-left: 10px;
 }
