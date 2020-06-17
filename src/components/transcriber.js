@@ -3,10 +3,9 @@ import Spotify from 'spotify-web-api-js';
 import { getHashParams } from '../helpers';
 import Slider from './playback-slider';
 import TrackInfo from './track-info';
-import SavePoint from './save-point';
 import Point from './point';
 import TimeStamp from './timestamp';
-import Play from './play';
+import Controls from './controls';
 
 const spotifyApi = new Spotify();
 const CHECK_INTERVAL = 1000;         // Interval to update timeStamp
@@ -32,6 +31,7 @@ class Transcriber extends Component {
         this.togglePlay = this.togglePlay.bind(this);
         this.updateTimeStamp = this.updateTimeStamp.bind(this);
         this.seekPosition = this.seekPosition.bind(this);
+        this.skipSeconds = this.skipSeconds.bind(this);
         this.setTimeStamp = this.setTimeStamp.bind(this);
         this.savePoint = this.savePoint.bind(this);
         this.skipToPoint = this.skipToPoint.bind(this);
@@ -251,9 +251,6 @@ class Transcriber extends Component {
                     })}
                 </div>
                 <a href={"http://localhost:8888/login"}>Log In</a>
-                <button onClick={() => this.seekPosition(0)}>-</button>
-                <Play togglePlay={this.togglePlay} playing={this.state.playing} />
-                <button onClick={() => this.skipSeconds(1000)}>Skip forward</button>
                 <TimeStamp timeStamp={this.state.timeStamp} />
                 <Slider
                     timeStamp={this.state.timeStamp / 1000}
@@ -262,7 +259,11 @@ class Transcriber extends Component {
                     setTimeStamp={this.setTimeStamp}
                 />
                 <TrackInfo info={this.state.trackInfo} />
-                <SavePoint
+                <Controls
+                    seekPosition={this.seekPosition}
+                    skipSeconds={this.skipSeconds}
+                    togglePlay={this.togglePlay}
+                    playing={this.state.playing}
                     savePoint={this.savePoint}
                     skipToPoint={this.skipToPoint}
                     toggleLoop={this.toggleLoop}
