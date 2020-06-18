@@ -24,9 +24,9 @@ class Controls extends Component {
     render() {
         return (
             <div>
-                <button className="prev" onClick={() => this.seekPosition(0)}>-</button>
+                <button className="to-pnt" onClick={() => this.seekPosition(0)}>&lt;</button>
                 <Play togglePlay={this.props.togglePlay} playing={this.props.playing} />
-                <button onClick={() => this.skipSeconds(1000)}>Skip forward</button>
+                <button className="to-pnt" onClick={() => this.skipSeconds(1000)}>&gt;</button>
                 <div className="save-ctrls">
                     <button className="to-pnt" onClick={() => this.handleBack()}>&lt;</button>
                     <button className="save-pnt" onClick={() => this.handleClick()}>+</button>
