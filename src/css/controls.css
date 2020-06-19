@@ -29,3 +29,13 @@
 .save-pnt:active {
     background-color: transparent;
 }
+
+#loop-img {
+    width: 20px;
+    background-color: transparent;
+}
+
+#loop-img:hover {
+    background-color: rgb(70, 70, 70);
+    border-radius: 4px;;
+}

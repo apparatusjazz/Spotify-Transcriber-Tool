@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import '../css/controls.css'
 import Play from './play';
+import loop from '../loop.png';
 
 class Controls extends Component {
     handleBack() {
@@ -31,7 +32,7 @@ class Controls extends Component {
                     <button className="to-pnt" onClick={() => this.handleBack()}>&lt;</button>
                     <button className="save-pnt" onClick={() => this.handleClick()}>+</button>
                     <button className="to-pnt" onClick={() => this.handleNext()}>&gt;</button>
-                    <button onClick={() => this.handleToggle()}>Toggle Loop</button>
+                    <img style={{ position: 'absolute' }} id="loop-img" src={loop} alt="loop" onClick={() => this.handleToggle()} />
                 </div>
             </div>
 
