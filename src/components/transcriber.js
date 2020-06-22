@@ -165,6 +165,7 @@ class Transcriber extends Component {
                 (res) => {
                     if (res.length === 0) {
                         console.log("You must be using an active Spotify session.");
+                        this.setState({ active: false });
                     } else {
                         console.log("Success!");
                         this.setState({
@@ -173,13 +174,13 @@ class Transcriber extends Component {
                             playing: res.is_playing,
                             timeStamp: res.progress_ms,
                             duration: res.item.duration_ms
-                        })
+                        });
+                        this.getTrackInfo();
                     }
                 }, () => {
                     console.log("Not logged in!");
                     this.setState({ loggedIn: false })
                 })
-
     }
     updateTimeStamp() {
         spotifyApi.getMyCurrentPlaybackState()
@@ -227,11 +228,12 @@ class Transcriber extends Component {
     componentDidMount() {
         const params = getHashParams();
         if (params.access_token) {
-            spotifyApi.setAccessToken(params.access_token)
+            spotifyApi.setAccessToken(params.access_token);
+            this.setState({ loggedIn: true });
         }
         this.getPlayback();
         this.checkCurrent();
-        this.getTrackInfo();
+        // this.getTrackInfo();
     }
     render() {
 
@@ -247,7 +249,7 @@ class Transcriber extends Component {
             />
         };
 
-        if (this.state.loggedIn) {
+        if (this.state.loggedIn && this.state.active) {
             return (
                 <div>
                     <div className="saved-points">
@@ -274,7 +276,10 @@ class Transcriber extends Component {
                         removeLoopPoints={this.removeLoopPoints}
                     />
                 </div>)
-        } else return <a href={"http://localhost:8888/login"}>Log In</a>
+        } else if (this.state.loggedIn && !this.state.active) {
+            return <h2>Spotify must be active to use this tool...</h2>
+        }
+        else return <a href={"http://localhost:8888/login"}>Log In</a>
     }
 }
 
