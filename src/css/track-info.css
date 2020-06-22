@@ -5,13 +5,13 @@
 }
 
 .album-img {
-    width: 100px;
+    width: 150px;
 }
 
 @media screen and (max-width: 600px) {
     .album-img {
-        width: 60px;
-        height: 60px;
+        width: 100px;
+        height: 100px;
     }
   }
 
