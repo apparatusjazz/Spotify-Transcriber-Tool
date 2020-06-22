@@ -168,13 +168,17 @@ class Transcriber extends Component {
                     } else {
                         console.log("Success!");
                         this.setState({
+                            loggedIn: true,
                             active: true,
                             playing: res.is_playing,
                             timeStamp: res.progress_ms,
                             duration: res.item.duration_ms
                         })
                     }
-                }, () => console.log("Not logged in!"))
+                }, () => {
+                    console.log("Not logged in!");
+                    this.setState({ loggedIn: false })
+                })
 
     }
     updateTimeStamp() {
@@ -243,34 +247,34 @@ class Transcriber extends Component {
             />
         };
 
-        return (
-            <div>
-                <div className="saved-points">
-                    {this.state.savedPoints.map(ms => {
-                        return point(ms);
-                    })}
-                </div>
-                <a href={"http://localhost:8888/login"}>Log In</a>
-                <TimeStamp timeStamp={this.state.timeStamp} />
-                <Slider
-                    timeStamp={this.state.timeStamp / 1000}
-                    trackLength={this.state.duration / 1000}
-                    changeTimeStamp={this.seekPosition}
-                    setTimeStamp={this.setTimeStamp}
-                />
-                <TrackInfo info={this.state.trackInfo} />
-                <Controls
-                    seekPosition={this.seekPosition}
-                    skipSeconds={this.skipSeconds}
-                    togglePlay={this.togglePlay}
-                    playing={this.state.playing}
-                    savePoint={this.savePoint}
-                    skipToPoint={this.skipToPoint}
-                    toggleLoop={this.toggleLoop}
-                    removeLoopPoints={this.removeLoopPoints}
-                />
-            </div>
-        )
+        if (this.state.loggedIn) {
+            return (
+                <div>
+                    <div className="saved-points">
+                        {this.state.savedPoints.map(ms => {
+                            return point(ms);
+                        })}
+                    </div>
+                    <TimeStamp timeStamp={this.state.timeStamp} />
+                    <Slider
+                        timeStamp={this.state.timeStamp / 1000}
+                        trackLength={this.state.duration / 1000}
+                        changeTimeStamp={this.seekPosition}
+                        setTimeStamp={this.setTimeStamp}
+                    />
+                    <TrackInfo info={this.state.trackInfo} />
+                    <Controls
+                        seekPosition={this.seekPosition}
+                        skipSeconds={this.skipSeconds}
+                        togglePlay={this.togglePlay}
+                        playing={this.state.playing}
+                        savePoint={this.savePoint}
+                        skipToPoint={this.skipToPoint}
+                        toggleLoop={this.toggleLoop}
+                        removeLoopPoints={this.removeLoopPoints}
+                    />
+                </div>)
+        } else return <a href={"http://localhost:8888/login"}>Log In</a>
     }
 }
 
