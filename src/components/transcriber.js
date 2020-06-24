@@ -6,6 +6,7 @@ import TrackInfo from './track-info';
 import Point from './point';
 import TimeStamp from './timestamp';
 import Controls from './controls';
+import '../css/transcriber.css';
 
 const spotifyApi = new Spotify();
 const CHECK_INTERVAL = 1000;         // Interval to update timeStamp
@@ -252,6 +253,7 @@ class Transcriber extends Component {
         if (this.state.loggedIn && this.state.active) {
             return (
                 <div>
+                    <TrackInfo info={this.state.trackInfo} />
                     <div className="saved-points">
                         {this.state.savedPoints.map(ms => {
                             return point(ms);
@@ -264,7 +266,6 @@ class Transcriber extends Component {
                         changeTimeStamp={this.seekPosition}
                         setTimeStamp={this.setTimeStamp}
                     />
-                    <TrackInfo info={this.state.trackInfo} />
                     <Controls
                         seekPosition={this.seekPosition}
                         skipSeconds={this.skipSeconds}
