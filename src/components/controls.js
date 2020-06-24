@@ -21,6 +21,7 @@ class Controls extends Component {
     }
     handleToggle() {
         this.props.toggleLoop();
+        this.playing = !this.playing;
     }
     seekPosition(ms) {
         this.props.seekPosition(ms);
@@ -28,9 +29,13 @@ class Controls extends Component {
     skipSeconds(ms) {
         this.props.skipSeconds(ms);
     }
+    componentDidMount() {
+        this.looping = false;
+    }
     render() {
+        let loopClassName = this.playing ? "btn loop-img looping" : "btn loop-img";
         return (
-            <div>
+            <div id="controls">
                 <img
                     className="btn to-beginning"
                     src={beginning} alt="beginning"
@@ -39,17 +44,16 @@ class Controls extends Component {
                 <img
                     className="btn skip"
                     src={skipBack} alt="skipBack"
-                    onClick={() => this.skipSeconds(-2000)}
+                    onClick={() => this.skipSeconds(-3000)}
                 />
                 <Play togglePlay={this.props.togglePlay} playing={this.props.playing} />
                 <img
                     className="btn skip"
                     src={skipForward} alt="skipFoward"
-                    onClick={() => this.skipSeconds(3000)}
+                    onClick={() => this.skipSeconds(2000)}
                 />
                 <img
-                    className="btn"
-                    id="loop-img"
+                    className={loopClassName}
                     src={loop}
                     alt="loop"
                     onClick={() => this.handleToggle()}
@@ -68,7 +72,7 @@ class Controls extends Component {
                         onClick={() => this.handleClick()}
                     />
                     <img
-                        className="btn skip-point"
+                        className="btn skip-point next"
                         src={nextPoint}
                         alt="nextPoint"
                         onClick={() => this.handleNext()}

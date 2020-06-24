@@ -53,16 +53,19 @@
     background-color: rgb(70, 70, 70);
     border-radius: 4px;
 }
+.btn:active {
+    background-color: rgb(48, 48, 48);
+}
 
-#loop-img {
+.loop-img {
     padding: 15px;
     margin-right: 20px;
     width: 18px;
     background-color: transparent;
 }
 
-#loop-img:hover {
-    background-color: rgb(70, 70, 70);
+.looping {
+    background-color: rgb(60, 60, 60);
     border-radius: 4px;
 }
 
