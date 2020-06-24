@@ -5,18 +5,20 @@
 }
 
 .album-img {
-    width: 150px;
+    width: 300px;
+    padding-bottom: 50px;
 }
 
 @media screen and (max-width: 600px) {
     .album-img {
-        width: 100px;
-        height: 100px;
+        width: 200px;
+        height: 200px;
     }
   }
 
 .text {
-    padding-left: 10px;
+    padding-left: 20px;
+    padding-top: 130px;
 }
 
 p {
