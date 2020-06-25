@@ -9,17 +9,22 @@
     padding-bottom: 50px;
 }
 
+.text {
+    padding-left: 30px;
+    padding-top: 235px;
+}
+
 @media screen and (max-width: 600px) {
     .album-img {
         width: 200px;
         height: 200px;
     }
-  }
 
-.text {
-    padding-left: 20px;
-    padding-top: 130px;
-}
+    .text {
+        padding-left: 20px;
+        padding-top: 140px;
+    }
+  }
 
 p {
     font-size: 14px;
