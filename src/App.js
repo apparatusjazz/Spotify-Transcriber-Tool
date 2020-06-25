@@ -5,7 +5,6 @@ import Transcriber from './components/transcriber'
 function App() {
   return (
     <div className="App">
-      <h1>Spotify Transcribe Tool</h1>
       <Transcriber />
     </div>
 
