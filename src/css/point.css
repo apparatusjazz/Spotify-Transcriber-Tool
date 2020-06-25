@@ -2,7 +2,7 @@
     height: 10px;
     width: 10px;
     position: fixed;
-    top: 13.2%;
+    top: 538px;
 
     z-index: 1;
 }
@@ -17,9 +17,13 @@
     position: absolute;
     z-index: 1;
     bottom: 10%;
-    margin: 0px 0px 0px -20px;
+    margin: 0px 0px 0px -25px;
     opacity: 0;
     transition: all ease 1s; 
+}
+
+.tooltip.timestamp {
+    padding-bottom: 10px;
 }
 
 .tooltip button {

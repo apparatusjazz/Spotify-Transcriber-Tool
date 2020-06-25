@@ -252,14 +252,15 @@ class Transcriber extends Component {
 
         if (this.state.loggedIn && this.state.active) {
             return (
-                <div>
+                <div className="main" >
+                    <h1 id="header">Spotify Transcriber</h1>
                     <TrackInfo info={this.state.trackInfo} />
                     <div className="saved-points">
                         {this.state.savedPoints.map(ms => {
                             return point(ms);
                         })}
                     </div>
-                    <TimeStamp timeStamp={this.state.timeStamp} />
+                    <TimeStamp className="timestamp" timeStamp={this.state.timeStamp} />
                     <Slider
                         timeStamp={this.state.timeStamp / 1000}
                         trackLength={this.state.duration / 1000}

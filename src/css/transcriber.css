@@ -3,10 +3,23 @@
     width: 90%;
 }
 
-.timestamp {
+.main > .timestamp {
     padding-bottom: 30px;
 }
 
 .track-info {
-    padding-top: 50px;
+    padding-top: 40px;
+}
+
+#header {
+    padding-top: 40px;
+}
+
+@media screen and (max-width: 600px) {
+    .track-info {
+        padding-top: 50px;
+    }
+    #header {
+        padding-top: 50px;
+    }
 }
