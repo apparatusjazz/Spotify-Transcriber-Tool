@@ -75,8 +75,8 @@ class Transcriber extends Component {
             .then(
                 (res) => {
                     let points = this.state.savedPoints;
-                    if (!points.includes(res.progress_ms) && res.progress_ms > 1300) {
-                        points.push(res.progress_ms - 700);
+                    if (!points.includes(res.progress_ms - 1000) && res.progress_ms > 1300) {
+                        points.push(res.progress_ms - 1000);
                         points.sort((a, b) => { return a - b });
                         this.setState({ savedPoints: points });
                     }
@@ -239,7 +239,7 @@ class Transcriber extends Component {
     render() {
 
         const point = ms => {
-            let left = `${((ms - 1000) / this.state.duration) * 100}%`;
+            let left = `${(((ms - 1000) / this.state.duration) * 90) + 4.84}%`;
             return <Point
                 key={ms}
                 ms={ms}
