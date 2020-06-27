@@ -136,7 +136,7 @@ class Transcriber extends Component {
     addLoopPoint(point) {
         let newPoints = this.state.loopPoints;
         if (this.state.loopPoints.includes(point)) {
-            newPoints = this.state.savedPoints.filter(val => {
+            newPoints = this.state.loopPoints.filter(val => {
                 return val !== point;
             });
         }
@@ -239,11 +239,12 @@ class Transcriber extends Component {
     render() {
 
         const point = ms => {
-            let left = `${(((ms - 1000) / this.state.duration) * 90) + 4.84}%`;
+            let left = `${(((ms - 1000) / this.state.duration) * 90) + 4.7}%`;
             return <Point
                 key={ms}
                 ms={ms}
                 left={left}
+                loopPoints={this.state.loopPoints}
                 deletePoint={this.deletePoint}
                 addLoopPoint={this.addLoopPoint}
                 loopPoints={this.state.loopPoints}
