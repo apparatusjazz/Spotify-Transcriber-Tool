@@ -11,6 +11,7 @@ class Point extends Component {
     }
     render() {
         let toggleAddLoopPoint = this.props.loopPoints.includes(this.props.ms) ? "-" : "+";
+        let pointColor = this.props.loopPoints.includes(this.props.ms) ? "red" : "white";
         return (
             <div className="point"
                 onMouseOver={this.handleMouseOver}
@@ -27,7 +28,7 @@ class Point extends Component {
                     </button>
                 </div>
 
-                <p className="point">
+                <p className="point" style={{ color: pointColor }}>
                     |
                 </p>
             </div>
