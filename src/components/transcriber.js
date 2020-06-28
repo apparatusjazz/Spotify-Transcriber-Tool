@@ -263,8 +263,8 @@ class Transcriber extends Component {
                     </div>
                     <TimeStamp className="timestamp" timeStamp={this.state.timeStamp} />
                     <Slider
-                        timeStamp={this.state.timeStamp / 1000}
-                        trackLength={this.state.duration / 1000}
+                        timeStamp={this.state.timeStamp}
+                        trackLength={this.state.duration}
                         changeTimeStamp={this.seekPosition}
                         setTimeStamp={this.setTimeStamp}
                     />

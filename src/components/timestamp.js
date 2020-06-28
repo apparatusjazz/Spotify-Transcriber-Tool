@@ -7,11 +7,13 @@ class TimeStamp extends Component {
         let seconds = Math.floor(this.props.timeStamp / 1000);
         let minutes = Math.floor(seconds / 60);
         let remainingSec = seconds % 60;
+        let ms = this.props.timeStamp % 1000;
+
         let str = ":";
         if (remainingSec < 10) str = ":0";
         return (
             <div className="timestamp">
-                {minutes}{str}{remainingSec}
+                {minutes}{str}{remainingSec}{str}{ms}
             </div>
         )
     }
