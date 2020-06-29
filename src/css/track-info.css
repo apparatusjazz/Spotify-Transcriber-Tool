@@ -6,12 +6,13 @@
 
 .album-img {
     width: 300px;
+    height: 300px;
     padding-bottom: 50px;
 }
 
 .text {
     padding-left: 30px;
-    padding-top: 235px;
+    padding-top: 238px;
 }
 
 @media screen and (max-width: 600px) {

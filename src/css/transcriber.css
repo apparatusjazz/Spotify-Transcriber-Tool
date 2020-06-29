@@ -1,8 +1,12 @@
 #playback-slider {
     padding-bottom: 30px;
     width: 90%;
+    color: #fff;
 }
 
+h2 {
+    color: #fff;
+}
 .main > .timestamp {
     padding-bottom: 30px;
 }
@@ -23,3 +27,7 @@
         padding-top: 50px;
     }
 }
+
+html, body, #app, #app>div {
+    height: 100%
+  }

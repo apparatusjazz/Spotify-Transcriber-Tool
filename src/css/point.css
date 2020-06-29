@@ -1,15 +1,22 @@
 .point {
+    color: rgb(199, 198, 255);
     height: 10px;
     width: 10px;
     position: fixed;
-    top: 538px;
+    top: 559px;
 
     z-index: 1;
 }
 
+@media screen and (max-width: 600px) {
+    .point {
+        top: 58.5%;
+    }
+}
+
 .tooltip {
     visibility: hidden;
-    width: 50px;
+    width: 80px;
     background-color: #272727;
     color: #fff;
     border-radius: 8px;
@@ -17,7 +24,7 @@
     position: absolute;
     z-index: 1;
     bottom: 10%;
-    margin: 0px 0px 0px -25px;
+    margin: 0px 0px 0px -40px;
     opacity: 0;
     transition: all ease 1s; 
 }
