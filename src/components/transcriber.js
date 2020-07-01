@@ -189,6 +189,35 @@ class Transcriber extends Component {
                 this.setState({ timeStamp: res.progress_ms });
             });
     }
+    handKeyPress(e) {
+        switch (e.key) {
+            case "k":
+                this.togglePlay();
+                break;
+            case "j":
+                this.skipSeconds(-3000);
+                break;
+            case "l":
+                this.skipSeconds(2000);
+                break;
+            case "o":
+                this.skipSeconds(10000);
+                break;
+            case "u":
+                if (this.state.timeStamp > 10000)
+                    this.skipSeconds(-10000);
+                break;
+            case "h":
+                this.savePoint();
+                break;
+            case "m":
+                this.skipToPoint(1);
+                break;
+            case "n":
+                this.skipToPoint(0);
+                break;
+        }
+    }
     getTrackInfo() {
         spotifyApi.getMyCurrentPlayingTrack()
             .then(res => {
@@ -253,7 +282,10 @@ class Transcriber extends Component {
 
         if (this.state.loggedIn && this.state.active) {
             return (
-                <div className="main" >
+                <div
+                    className="main"
+                    onKeyPress={(e) => this.handKeyPress(e)}
+                >
                     <h1 id="header">Spotify Transcriber</h1>
                     <TrackInfo info={this.state.trackInfo} />
                     <div className="saved-points">
