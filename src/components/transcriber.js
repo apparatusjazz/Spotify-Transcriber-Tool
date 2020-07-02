@@ -219,6 +219,10 @@ class Transcriber extends Component {
             case "n":
                 this.skipToPoint(0);
                 break;
+            case "b":
+                if (this.state.savedPoints.includes(this.state.timeStamp))
+                    this.deletePoint(this.state.timeStamp);
+                break;
         }
     }
     getTrackInfo() {
