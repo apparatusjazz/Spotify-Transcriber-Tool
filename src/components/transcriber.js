@@ -45,10 +45,10 @@ class Transcriber extends Component {
         spotifyApi.getMyCurrentPlaybackState()
             .then(res => {
                 if (!res.is_playing) {
-                    spotifyApi.play();
+                    spotifyApi.play().catch();
                     this.setState({ playing: true });
                 } else {
-                    spotifyApi.pause();
+                    spotifyApi.pause().catch();
                     this.setState({ playing: false });
                 }
             }, (err) => console.log("A problem ocurred..."))
