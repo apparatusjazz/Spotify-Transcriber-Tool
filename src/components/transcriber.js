@@ -195,7 +195,9 @@ class Transcriber extends Component {
                 this.togglePlay();
                 break;
             case "j":
-                this.skipSeconds(-3000);
+                if (this.state.timeStamp > 3000)
+                    this.skipSeconds(-3000);
+                else this.seekPosition(0);
                 break;
             case "l":
                 this.skipSeconds(2000);
@@ -206,6 +208,7 @@ class Transcriber extends Component {
             case "u":
                 if (this.state.timeStamp > 10000)
                     this.skipSeconds(-10000);
+                else this.seekPosition(0);
                 break;
             case "h":
                 this.savePoint();
@@ -263,7 +266,10 @@ class Transcriber extends Component {
         }
         this.getPlayback();
         this.checkCurrent();
-        // this.getTrackInfo();
+
+        window.addEventListener("keypress", (e) => {
+            this.handKeyPress(e);
+        })
     }
     render() {
 
@@ -284,7 +290,6 @@ class Transcriber extends Component {
             return (
                 <div
                     className="main"
-                    onKeyPress={(e) => this.handKeyPress(e)}
                 >
                     <h1 id="header">Spotify Transcriber</h1>
                     <TrackInfo info={this.state.trackInfo} />
