@@ -75,11 +75,14 @@ class Transcriber extends Component {
             .then(
                 (res) => {
                     let points = this.state.savedPoints;
-                    if (!points.includes(res.progress_ms - 1000) && res.progress_ms > 1300) {
-                        points.push(res.progress_ms - 1000);
-                        points.sort((a, b) => { return a - b });
-                        this.setState({ savedPoints: points });
+                    if (!this.state.playing) {
+                        points.push(res.progress_ms);
                     }
+                    else if (!points.includes(res.progress_ms - 1000) && res.progress_ms > 1300) {
+                        points.push(res.progress_ms - 1000);
+                    }
+                    points.sort((a, b) => { return a - b });
+                    this.setState({ savedPoints: points });
                 },
                 (err) => { console.log("An error occured!") }
             )
@@ -209,6 +212,14 @@ class Transcriber extends Component {
                 if (this.state.timeStamp > 10000)
                     this.skipSeconds(-10000);
                 else this.seekPosition(0);
+                break;
+            case "i":
+                if (this.state.timeStamp > 100)
+                    this.skipSeconds(-100);
+                else this.seekPosition(0);
+                break;
+            case "p":
+                this.skipSeconds(100);
                 break;
             case "h":
                 this.savePoint();
