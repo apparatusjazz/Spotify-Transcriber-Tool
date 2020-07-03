@@ -30,4 +30,11 @@ h2 {
 
 html, body, #app, #app>div {
     height: 100%
-  }
+}
+
+#active {
+    padding-top: 20%;
+}
+#login-btn {
+    padding-top: 20%;
+}

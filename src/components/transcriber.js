@@ -332,9 +332,17 @@ class Transcriber extends Component {
                     />
                 </div>)
         } else if (this.state.loggedIn && !this.state.active) {
-            return <h2>Spotify must be active to use this tool...</h2>
+            return (<div>
+                <h1 id="header">Spotify Transcriber</h1>
+                <h2 id="active" >Spotify must be active to use this tool...</h2>
+            </div>)
         }
-        else return <a href={"http://localhost:8888/login"}>Log In</a>
+        else {
+            return (<div>
+                <h1 id="header">Spotify Transcriber</h1>
+                <a id="login-btn" href={"http://localhost:8888/login"}>Log In</a>
+            </div>)
+        }
     }
 }
 
