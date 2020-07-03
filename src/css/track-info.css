@@ -5,6 +5,13 @@
     padding-right: 5%;
 }
 
+#track-name {
+    font-weight: 700;
+}
+#artist-name {
+    color: rgb(201, 201, 201);
+}
+
 .album-img {
     width: 300px;
     height: 300px;
@@ -17,7 +24,7 @@
     text-overflow: ellipsis;
     padding-left: 30px;
     padding-right: 30px;
-    padding-top: 238px;
+    padding-top: 228px;
 }
 
 @media screen and (max-width: 600px) {
@@ -25,11 +32,13 @@
         width: 200px;
         height: 200px;
     }
-
+    #track-name {
+        font-weight: 400;
+    }
     .text {
         padding-left: 20px;
         padding-right: 20px;
-        padding-top: 140px;
+        padding-top: 130px;
     }
   }
 

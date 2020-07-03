@@ -7,8 +7,8 @@ class TrackInfo extends Component {
             <div className="track-info">
                 <img className="album-img" src={this.props.info.albumCover} alt="album cover" />
                 <div className="text">
-                    <p>{this.props.info.trackName}</p>
-                    <p>{this.props.info.artist}</p>
+                    <p id="track-name">{this.props.info.trackName}</p>
+                    <p id="artist-name">{this.props.info.artist}</p>
                 </div>
             </div>
         )
