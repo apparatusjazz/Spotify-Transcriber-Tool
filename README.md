@@ -1,10 +1,23 @@
-This app is a transcribing tool for Spotify aimed at musicians to help transcribe and learn music.
+### Spotify Transcriber Tool
+
+This app is a transcribing tool for Spotify aimed at musicians to help transcribe and learn music. It allows you to login to your Spotify account and use easy playback tools to help navigate any song.
+
+Features:
+
+* Save points and navigate to saved points with easy controls
+* Loop between two points
+* Skip through song in time increments
+* Convenient keyboard shortcuts for all controls
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
 In the project directory, you can run:
+
+First, cd into the authorization directory and run command below to start server for Spotify access. Note: In the server.js file, you must add your client_id and client_secret which can be obtained by creating a Spotify Developers account.
+
+### `node server.js`
 
 ### `npm start`
 
