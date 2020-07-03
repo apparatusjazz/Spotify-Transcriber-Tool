@@ -11,8 +11,6 @@
 # production
 /build
 
-# To keep client secret hidden
-authorization/server.js
 
 # misc
 .DS_Store
