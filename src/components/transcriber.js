@@ -340,7 +340,7 @@ class Transcriber extends Component {
         else {
             return (<div>
                 <h1 id="header">Spotify Transcriber</h1>
-                <a id="login-btn" href={"http://localhost:8888/login"}>Log In</a>
+                <a id="login-btn" href={"http://localhost:8888/login"}>Login</a>
             </div>)
         }
     }
