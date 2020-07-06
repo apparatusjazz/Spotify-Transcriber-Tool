@@ -15,7 +15,7 @@
 .album-img {
     width: 300px;
     height: 300px;
-    padding-bottom: 50px;
+    padding-bottom: 40px;
 }
 
 .text {
@@ -31,6 +31,7 @@
     .album-img {
         width: 200px;
         height: 200px;
+        padding-bottom: 50px;
     }
     #track-name {
         font-weight: 400;
