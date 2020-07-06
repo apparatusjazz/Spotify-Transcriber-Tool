@@ -49,7 +49,10 @@ class Transcriber extends Component {
                     this.setState({ playing: true });
                 } else {
                     spotifyApi.pause().catch();
-                    this.setState({ playing: false });
+                    this.setState({
+                        playing: false,
+                        timeStamp: res.progress_ms
+                    });
                 }
             }, (err) => console.log("A problem ocurred..."))
     }
