@@ -292,7 +292,7 @@ class Transcriber extends Component {
     render() {
 
         const point = ms => {
-            let left = `${(((ms - 1000) / this.state.duration) * 90) + 4.7}%`;
+            let left = `${(((ms - 1000) / this.state.duration) * 90) + 5}%`;
             return <Point
                 key={ms}
                 ms={ms}
