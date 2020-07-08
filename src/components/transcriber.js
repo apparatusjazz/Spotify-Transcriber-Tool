@@ -81,8 +81,8 @@ class Transcriber extends Component {
                     if (!this.state.playing) {
                         points.push(res.progress_ms);
                     }
-                    else if (!points.includes(res.progress_ms - 1000) && res.progress_ms > 1300) {
-                        points.push(res.progress_ms - 1000);
+                    else if (!points.includes(res.progress_ms - 500) && res.progress_ms > 500) {
+                        points.push(res.progress_ms - 500);
                     }
                     points.sort((a, b) => { return a - b });
                     this.setState({ savedPoints: points });
