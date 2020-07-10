@@ -1,5 +1,5 @@
 #playback-slider {
-    padding-bottom: 30px;
+    padding-bottom: 4vh;
     width: 90%;
     color: #fff;
 }
@@ -8,18 +8,35 @@ h2 {
     color: #fff;
 }
 .main > .timestamp {
-    padding-bottom: 30px;
+    padding-bottom: 4vh;
 }
 
 .track-info {
-    padding-top: 35px;
+    padding-top: 5vh;
 }
 
 #header {
-    padding-top: 35px;
+    padding-top: 5vh;
+}
+/* @media screen and (max-height: 730px) {
+    #header {
+        padding-top: 10px;
+    }
+    .track-info {
+        padding-top: 10px;
+    }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-height: 740px) {
+    #header {
+        padding-top: 20px;
+    }
+    .track-info {
+        padding-top: 20px;
+    }
+} */
+
+@media screen and ((max-width: 600px) or (max-height: 630px)) {
     .track-info {
         padding-top: 50px;
     }
