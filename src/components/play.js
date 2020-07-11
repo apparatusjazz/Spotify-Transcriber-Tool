@@ -14,7 +14,6 @@ class Play extends Component {
 
     render() {
         const playing = this.props.playing ? "button pause" : "button play";
-        const play = this.props.playing ? "Pause" : "Play";
         return (
 
             <button
