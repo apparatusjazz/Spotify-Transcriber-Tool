@@ -237,6 +237,7 @@ class Transcriber extends Component {
                 if (this.state.savedPoints.includes(this.state.timeStamp))
                     this.deletePoint(this.state.timeStamp);
                 break;
+            default: return;
         }
     }
     getTrackInfo() {
@@ -300,7 +301,6 @@ class Transcriber extends Component {
                 loopPoints={this.state.loopPoints}
                 deletePoint={this.deletePoint}
                 addLoopPoint={this.addLoopPoint}
-                loopPoints={this.state.loopPoints}
             />
         };
 
