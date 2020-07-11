@@ -40,6 +40,7 @@ class Transcriber extends Component {
         this.addLoopPoint = this.addLoopPoint.bind(this);
         this.toggleLoop = this.toggleLoop.bind(this);
         this.removeLoopPoints = this.removeLoopPoints.bind(this);
+        this.point = this.point.bind(this);
     }
     togglePlay() {
         spotifyApi.getMyCurrentPlaybackState()
@@ -290,19 +291,18 @@ class Transcriber extends Component {
             this.handKeyPress(e);
         })
     }
+    point(ms) {
+        let left = `${(((ms - 1000) / this.state.duration) * 90) + 5}%`;
+        return <Point
+            key={ms}
+            ms={ms}
+            left={left}
+            loopPoints={this.state.loopPoints}
+            deletePoint={this.deletePoint}
+            addLoopPoint={this.addLoopPoint}
+        />
+    };
     render() {
-
-        const point = ms => {
-            let left = `${(((ms - 1000) / this.state.duration) * 90) + 5}%`;
-            return <Point
-                key={ms}
-                ms={ms}
-                left={left}
-                loopPoints={this.state.loopPoints}
-                deletePoint={this.deletePoint}
-                addLoopPoint={this.addLoopPoint}
-            />
-        };
 
         if (this.state.loggedIn && this.state.active) {
             return (
@@ -311,17 +311,14 @@ class Transcriber extends Component {
                 >
                     <h1 id="header">Spotify Transcriber</h1>
                     <TrackInfo info={this.state.trackInfo} />
-                    <div className="saved-points">
-                        {this.state.savedPoints.map(ms => {
-                            return point(ms);
-                        })}
-                    </div>
                     <TimeStamp className="timestamp" timeStamp={this.state.timeStamp} />
                     <Slider
                         timeStamp={this.state.timeStamp}
                         trackLength={this.state.duration}
                         changeTimeStamp={this.seekPosition}
                         setTimeStamp={this.setTimeStamp}
+                        point={this.point}
+                        savedPoints={this.state.savedPoints}
                     />
                     <Controls
                         seekPosition={this.seekPosition}

@@ -22,6 +22,11 @@ class PlaybackSlider extends Component {
                     min={0}
                     max={this.props.trackLength}
                 />
+                <div className="saved-points">
+                    {this.props.savedPoints.map(ms => {
+                        return this.props.point(ms);
+                    })}
+                </div>
             </div>
         )
     }
