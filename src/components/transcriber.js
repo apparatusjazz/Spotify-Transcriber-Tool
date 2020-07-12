@@ -46,16 +46,17 @@ class Transcriber extends Component {
         spotifyApi.getMyCurrentPlaybackState()
             .then(res => {
                 if (!res.is_playing) {
-                    spotifyApi.play().catch();
+                    spotifyApi.play().catch(e => { console.log() });
                     this.setState({ playing: true });
                 } else {
-                    spotifyApi.pause().catch();
+                    spotifyApi.pause().catch(e => { console.log() });
                     this.setState({
                         playing: false,
                         timeStamp: res.progress_ms
                     });
                 }
-            }, (err) => console.log("A problem ocurred..."))
+            })
+            .catch()
     }
     setTimeStamp(ms) {
         this.setState({ timeStamp: ms });
@@ -63,7 +64,7 @@ class Transcriber extends Component {
     seekPosition(ms) {
         spotifyApi.seek(ms).then(() => {
             this.setState({ timeStamp: ms });
-        })
+        }).catch(e => { console.log() })
     }
     skipSeconds(ms) {
         spotifyApi.seek(this.state.timeStamp + ms)
@@ -72,6 +73,7 @@ class Transcriber extends Component {
             }).then(res => {
                 this.setState({ timeStamp: res.progress_ms })
             })
+            .catch(e => { console.log() })
 
     }
     savePoint() {
@@ -87,9 +89,8 @@ class Transcriber extends Component {
                     }
                     points.sort((a, b) => { return a - b });
                     this.setState({ savedPoints: points });
-                },
-                (err) => { console.log("An error occured!") }
-            )
+                }
+            ).catch(e => { console.log() })
     }
     skipToPoint(val) {
         let current = this.state.timeStamp;
@@ -165,7 +166,7 @@ class Transcriber extends Component {
         spotifyApi.getMyCurrentPlaybackState()
             .then((res) => {
                 return res.progress_ms
-            })
+            }).catch(e => { console.log() })
     }
     getPlayback() {
         spotifyApi.getMyCurrentPlaybackState()
@@ -188,57 +189,59 @@ class Transcriber extends Component {
                 }, () => {
                     console.log("Not logged in!");
                     this.setState({ loggedIn: false })
-                })
+                }).catch(e => { console.log() })
     }
     updateTimeStamp() {
         spotifyApi.getMyCurrentPlaybackState()
             .then(res => {
                 this.setState({ timeStamp: res.progress_ms });
-            });
+            }).catch(e => { console.log() });
     }
     handKeyPress(e) {
-        switch (e.key) {
-            case "k":
-                this.togglePlay();
-                break;
-            case "j":
-                if (this.state.timeStamp > 3000)
-                    this.skipSeconds(-3000);
-                else this.seekPosition(0);
-                break;
-            case "l":
-                this.skipSeconds(2000);
-                break;
-            case "o":
-                this.skipSeconds(10000);
-                break;
-            case "u":
-                if (this.state.timeStamp > 10000)
-                    this.skipSeconds(-10000);
-                else this.seekPosition(0);
-                break;
-            case "i":
-                if (this.state.timeStamp > 100)
-                    this.skipSeconds(-100);
-                else this.seekPosition(0);
-                break;
-            case "p":
-                this.skipSeconds(100);
-                break;
-            case "h":
-                this.savePoint();
-                break;
-            case "m":
-                this.skipToPoint(1);
-                break;
-            case "n":
-                this.skipToPoint(0);
-                break;
-            case "b":
-                if (this.state.savedPoints.includes(this.state.timeStamp))
-                    this.deletePoint(this.state.timeStamp);
-                break;
-            default: return;
+        if (this.state.active && this.state.loggedIn) {
+            switch (e.key) {
+                case "k":
+                    this.togglePlay();
+                    break;
+                case "j":
+                    if (this.state.timeStamp > 3000)
+                        this.skipSeconds(-3000);
+                    else this.seekPosition(0);
+                    break;
+                case "l":
+                    this.skipSeconds(2000);
+                    break;
+                case "o":
+                    this.skipSeconds(10000);
+                    break;
+                case "u":
+                    if (this.state.timeStamp > 10000)
+                        this.skipSeconds(-10000);
+                    else this.seekPosition(0);
+                    break;
+                case "i":
+                    if (this.state.timeStamp > 100)
+                        this.skipSeconds(-100);
+                    else this.seekPosition(0);
+                    break;
+                case "p":
+                    this.skipSeconds(100);
+                    break;
+                case "h":
+                    this.savePoint();
+                    break;
+                case "m":
+                    this.skipToPoint(1);
+                    break;
+                case "n":
+                    this.skipToPoint(0);
+                    break;
+                case "b":
+                    if (this.state.savedPoints.includes(this.state.timeStamp))
+                        this.deletePoint(this.state.timeStamp);
+                    break;
+                default: return;
+            }
         }
     }
     getTrackInfo() {
@@ -251,11 +254,11 @@ class Transcriber extends Component {
                         albumCover: res.item.album.images[0].url
                     }
                 })
-            }, (err) => console.log("A problem ocurred..."))
+            }).catch(e => { console.log() })
     }
     checkCurrent() {
         setInterval(() => {
-            if (this.state.active && this.state.playing) {  //temporary for testing
+            if (this.state.loggedIn && this.state.active && this.state.playing) {
                 spotifyApi.getMyCurrentPlaybackState()
                     .then(res => {
 
@@ -274,7 +277,7 @@ class Transcriber extends Component {
                                 });
                             }
                         }
-                    })
+                    }).catch(e => { console.log() })
             }
         }, CHECK_INTERVAL);
     }
