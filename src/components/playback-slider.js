@@ -4,7 +4,7 @@ import { Slider } from '@material-ui/core'
 
 class PlaybackSlider extends Component {
     handleMouseUp(event) {
-        let time = parseInt(event.target.getAttribute("aria-valuenow"));
+        let time = this.props.timeStamp;
         this.props.changeTimeStamp(time);
     }
     handleChange(e, value) {
@@ -17,6 +17,7 @@ class PlaybackSlider extends Component {
                     id="playback-slider"
                     onChange={(e, val) => this.handleChange(e, val)}
                     onMouseUp={(e) => this.handleMouseUp(e)}
+                    onTouchEnd={(e) => this.handleMouseUp(e)}
                     value={this.props.timeStamp}
                     aria-labelledby="continuous-slider"
                     min={0}
