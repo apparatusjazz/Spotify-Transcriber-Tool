@@ -56,7 +56,7 @@ class Transcriber extends Component {
                     });
                 }
             })
-            .catch()
+            .catch(e => { console.log() })
     }
     setTimeStamp(ms) {
         this.setState({ timeStamp: ms });
@@ -81,7 +81,7 @@ class Transcriber extends Component {
             .then(
                 (res) => {
                     let points = this.state.savedPoints;
-                    if (!this.state.playing) {
+                    if (!points.includes(res.progress_ms) && !this.state.playing) {
                         points.push(res.progress_ms);
                     }
                     else if (!points.includes(res.progress_ms - 500) && res.progress_ms > 500) {
