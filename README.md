@@ -2,6 +2,8 @@
 
 This app is a transcribing tool for Spotify aimed at musicians to help transcribe and learn music. It allows you to login to your Spotify account and use easy playback tools to help navigate any song.
 
+![transcriber](transcriber.gif)
+
 Features:
 
 * Save points and navigate to saved points with easy controls
