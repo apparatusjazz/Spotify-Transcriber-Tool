@@ -7,6 +7,7 @@ import Point from './point';
 import TimeStamp from './timestamp';
 import Controls from './controls';
 import '../css/transcriber.css';
+import Footer from './footer';
 
 const spotifyApi = new Spotify();
 const CHECK_INTERVAL = 1000;         // Interval to update timeStamp
@@ -333,6 +334,7 @@ class Transcriber extends Component {
                         toggleLoop={this.toggleLoop}
                         removeLoopPoints={this.removeLoopPoints}
                     />
+                    <Footer />
                 </div>)
         } else if (this.state.loggedIn && !this.state.active) {
             return (<div>
