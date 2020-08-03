@@ -7,6 +7,7 @@ class Footer extends Component {
         return (
             <div className="footer">
                 <p id="credit" >Created by Maui Arcuri</p>
+                <p id="info">Keyboard Controls</p>
             </div>
         )
     }

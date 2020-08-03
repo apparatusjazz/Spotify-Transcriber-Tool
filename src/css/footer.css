@@ -1,6 +1,19 @@
 
-p#credit {
+.footer p {
+    display: inline-flex;
     font-size: 11px;
-    text-align: left;
+}
+
+#credit {
+    float: left;
     padding-left: 5%;
+}
+
+#info {
+    float: right;
+    padding-right: 5%;
+}
+
+#info:hover {
+    color: grey;
 }
