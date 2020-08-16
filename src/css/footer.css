@@ -1,11 +1,10 @@
 
-.footer p {
+.footer p,
+.footer-title {
     display: inline-flex;
     font-size: 11px;
 }
-.footer p .row {
-    font-size: 14px;
-}
+
 
 #credit {
     float: left;
@@ -17,11 +16,11 @@
     padding-right: 5%;
 }
 
-#info p:hover {
+.footer-title p:hover {
     color: grey;
 }
 
-#info p:hover .controls-layer {
+#info .footer-title:hover .controls-layer {
     visibility: visible;
     opacity: 100;
 }
@@ -32,6 +31,7 @@
 }
 
 .controls-layer {
+    font-size: 14px;
     visibility: hidden;
     width: 320px;
     background-color: #272727;

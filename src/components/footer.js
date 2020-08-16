@@ -9,8 +9,9 @@ class Footer extends Component {
             <div className="footer">
                 <p id="credit" >Created by Maui Arcuri</p>
                 <div id="info">
-                    <p>Keyboard Controls
-                    <div className="controls-layer">
+                    <div className="footer-title">
+                        <p>Keyboard Controls</p>
+                        <div className="controls-layer">
                             <div className="row">
                                 <span className="key-letter">U</span>
                                 <span className="description"> : Skip back 10s</span>
@@ -67,7 +68,7 @@ class Footer extends Component {
                             </div>
 
                         </div>
-                    </p>
+                    </div>
                 </div>
             </div>
         )
