@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Spotify from 'spotify-web-api-js';
-import { getHashParams } from '../helpers';
+import { getHashParams, draw } from '../helpers';
 import Slider from './playback-slider';
 import TrackInfo from './track-info';
 import Point from './point';
@@ -263,7 +263,7 @@ class Transcriber extends Component {
                 spotifyApi.getMyCurrentPlaybackState()
                     .then(res => {
 
-                        if (res.is_playing) {
+                        if (res.is_playing && (res.item.name === this.state.trackInfo.trackName)) {
                             let ts = this.state.timeStamp;  //Handle looping
                             if (this.state.loopActive && this.state.loopPoints.length === 2 &&
                                 this.state.timeStamp > this.state.loopPoints[1] - 1500) {
@@ -277,6 +277,13 @@ class Transcriber extends Component {
                                     playing: res.is_playing
                                 });
                             }
+                        }
+                        else {
+                            this.getTrackInfo();
+                            this.getPlayback();
+                            this.setState({
+                                savedPoints: []
+                            });
                         }
                     }).catch(e => { console.log() })
             }
@@ -293,7 +300,7 @@ class Transcriber extends Component {
 
         window.addEventListener("keypress", (e) => {
             this.handKeyPress(e);
-        })
+        });
     }
     point(ms) {
         let left = `${(((ms - 1000) / this.state.duration) * 90) + 5}%`;
@@ -313,7 +320,7 @@ class Transcriber extends Component {
                 <div
                     className="main"
                 >
-                    <h1 id="header">Spotify Transcriber</h1>
+                    <h1 id="header">Transcribifi</h1>
                     <TrackInfo info={this.state.trackInfo} />
                     <TimeStamp className="timestamp" timeStamp={this.state.timeStamp} />
                     <Slider
@@ -338,13 +345,13 @@ class Transcriber extends Component {
                 </div>)
         } else if (this.state.loggedIn && !this.state.active) {
             return (<div>
-                <h1 id="header">Spotify Transcriber</h1>
+                <h1 id="header">Transcribifi</h1>
                 <h2 id="active" >Spotify must be active to use this tool...</h2>
             </div>)
         }
         else {
             return (<div>
-                <h1 id="header">Spotify Transcriber</h1>
+                <h1 id="header">Transcribifi</h1>
                 <a id="login-btn" href={"http://localhost:8888/login"}>Login</a>
             </div>)
         }
