@@ -3,6 +3,9 @@
     display: inline-flex;
     font-size: 11px;
 }
+.footer p .row {
+    font-size: 14px;
+}
 
 #credit {
     float: left;
@@ -14,6 +17,41 @@
     padding-right: 5%;
 }
 
-#info:hover {
+#info p:hover {
     color: grey;
+}
+
+#info p:hover .controls-layer {
+    visibility: visible;
+    opacity: 100;
+}
+
+.row {
+    padding: 4px;
+    text-align: left;
+}
+
+.controls-layer {
+    visibility: hidden;
+    width: 320px;
+    background-color: #272727;
+    color: #fff;
+    border-radius: 8px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    right: 5%;
+    bottom: 10%;
+    opacity: 0;
+    transition: all ease .5s; 
+}
+
+.key-letter {
+    display: inline-block;
+    text-align: center;
+    width: 18px;
+    border: solid;
+    border-width: 1px;
+    border-radius: 3px;
+    margin: 3px;
 }
