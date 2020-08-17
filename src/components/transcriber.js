@@ -278,7 +278,7 @@ class Transcriber extends Component {
                                 });
                             }
                         }
-                        else {
+                        else if (res.item.name !== this.state.trackInfo.trackName) {
                             this.getTrackInfo();
                             this.getPlayback();
                             this.setState({
