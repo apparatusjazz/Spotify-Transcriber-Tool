@@ -14,8 +14,6 @@ class Point extends Component {
         let pointColor = this.props.loopPoints.includes(this.props.ms) ? "red" : "white";
         return (
             <div className="point"
-                onMouseOver={this.handleMouseOver}
-                onMouseLeave={this.handleMouseLeave}
                 style={{ left: this.props.left }}
             >
                 <div className="tooltip" >
