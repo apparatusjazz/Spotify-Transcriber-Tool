@@ -12,6 +12,10 @@
     margin-top: 8px;
 }
 
+#git-logo:hover {
+    background-color: rgb(180, 180, 180);
+}
+
 .footer p,
 .footer-title {
     display: inline-flex;
