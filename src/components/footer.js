@@ -8,7 +8,7 @@ class Footer extends Component {
     render() {
         return (
             <div className="footer">
-                <p id="credit" >Created by Maui Arcuri</p>
+                <p id="credit" >Created by Maui Arcuri&nbsp; &nbsp;| &nbsp;Github:</p>
                 <a href="https://github.com/apparatusjazz/Spotify-Transcriber-Tool" target="_blank">
                     <img id="git-logo" alt="Maui Arcuri Github" src={gitHub} />
                 </a>
