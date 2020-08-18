@@ -259,7 +259,7 @@ class Transcriber extends Component {
     }
     checkCurrent() {
         setInterval(() => {
-            if (this.state.loggedIn && this.state.active && this.state.playing) {
+            if (this.state.loggedIn && this.state.active) {
                 spotifyApi.getMyCurrentPlaybackState()
                     .then(res => {
 
