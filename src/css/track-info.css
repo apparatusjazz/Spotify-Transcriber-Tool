@@ -5,6 +5,15 @@
     padding-right: 5%;
 }
 
+#spotify-link {
+    width: 20px;
+    border-radius: 100%;
+}
+
+#spotify-link:hover {
+    background-color: rgb(80, 80, 80);
+}
+
 #track-name {
     font-weight: 700;
 }
@@ -24,7 +33,7 @@
     text-overflow: ellipsis;
     padding-left: 30px;
     padding-right: 30px;
-    padding-top: 228px;
+    padding-top: 215px;
 }
 
 @media screen and (max-width: 600px) {
@@ -39,7 +48,7 @@
     .text {
         padding-left: 20px;
         padding-right: 20px;
-        padding-top: 130px;
+        padding-top: 115px;
     }
 }
 @media screen and (max-height: 665px) {
@@ -55,7 +64,7 @@
     .text {
         padding-left: 20px;
         padding-right: 20px;
-        padding-top: 130px;
+        padding-top: 115px;
     }
 }
 
