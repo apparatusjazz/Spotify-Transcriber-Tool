@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import '../css/footer.css'
+import gitHub from '../assets/GitHub-Mark-32px.png';
 
 
 class Footer extends Component {
@@ -8,6 +9,9 @@ class Footer extends Component {
         return (
             <div className="footer">
                 <p id="credit" >Created by Maui Arcuri</p>
+                <a href="https://github.com/apparatusjazz/Spotify-Transcriber-Tool" target="_blank">
+                    <img id="git-logo" alt="Maui Arcuri Github" src={gitHub} />
+                </a>
                 <div id="info">
                     <div className="footer-title">
                         <p>Keyboard Controls</p>
