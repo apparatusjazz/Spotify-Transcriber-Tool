@@ -25,6 +25,7 @@ class Transcriber extends Component {
             loopPoints: [],
             loopActive: false,
             trackInfo: {
+                trackId: '',
                 artist: '',
                 trackName: '',
                 albumCover: ''
@@ -250,6 +251,7 @@ class Transcriber extends Component {
             .then(res => {
                 this.setState({
                     trackInfo: {
+                        trackId: res.item.id,
                         artist: res.item.artists[0].name,
                         trackName: res.item.name,
                         albumCover: res.item.album.images[0].url
