@@ -9,6 +9,8 @@ class PlaybackSlider extends Component {
     }
     handleChange(e, value) {
         this.props.setTimeStamp(value);
+        if (this.props.timeStamp === 0)
+            this.props.changeTimeStamp(0);
     }
     render() {
         return (
