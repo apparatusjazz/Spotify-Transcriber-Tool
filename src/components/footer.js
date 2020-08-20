@@ -9,7 +9,7 @@ class Footer extends Component {
         return (
             <div className="footer">
                 <p id="credit" >Created by Maui Arcuri&nbsp; &nbsp;| &nbsp;Github:</p>
-                <a href="https://github.com/apparatusjazz/Spotify-Transcriber-Tool" target="_blank">
+                <a href="https://github.com/apparatusjazz/Spotify-Transcriber-Tool" target="_blank" rel="noopener noreferrer">
                     <img id="git-logo" alt="Maui Arcuri Github" src={gitHub} />
                 </a>
                 <div id="info">
