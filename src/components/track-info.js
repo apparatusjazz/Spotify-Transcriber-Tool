@@ -8,7 +8,12 @@ class TrackInfo extends Component {
             <div className="track-info">
                 <img className="album-img" src={this.props.info.albumCover} alt="album cover" />
                 <div className="text">
-                    <a href={`https://open.spotify.com/track/${this.props.info.trackId}`} target="_blank" rel="noopener noreferrer">
+                    <a
+                        href={`https://open.spotify.com/track/${this.props.info.trackId}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title="Open in Spotify"
+                    >
                         <img id="spotify-link" src={spotifyLogo} alt="Spotify Track"></img>
                     </a>
                     <p id="track-name">{this.props.info.trackName}</p>
