@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Spotify from 'spotify-web-api-js';
-import { getHashParams, draw } from '../helpers';
+import { getHashParams } from '../helpers';
 import Slider from './playback-slider';
 import TrackInfo from './track-info';
 import Point from './point';
@@ -10,7 +10,7 @@ import '../css/transcriber.css';
 import Footer from './footer';
 
 const spotifyApi = new Spotify();
-const CHECK_INTERVAL = 1000;         // Interval to update timeStamp
+const CHECK_INTERVAL = 400;         // Interval to update timeStamp
 
 class Transcriber extends Component {
     constructor(props) {
@@ -48,14 +48,16 @@ class Transcriber extends Component {
         spotifyApi.getMyCurrentPlaybackState()
             .then(res => {
                 if (!res.is_playing) {
-                    spotifyApi.play().catch(e => { console.log() });
-                    this.setState({ playing: true });
+                    spotifyApi.play().catch(e => { console.log() }).then(() => {
+                        this.setState({ playing: true });
+                    })
                 } else {
-                    spotifyApi.pause().catch(e => { console.log() });
-                    this.setState({
-                        playing: false,
-                        timeStamp: res.progress_ms
-                    });
+                    spotifyApi.pause().catch(e => { console.log() }).then(() => {
+                        this.setState({
+                            playing: false,
+                            timeStamp: res.progress_ms
+                        });
+                    })
                 }
             })
             .catch(e => { console.log() })
@@ -175,10 +177,8 @@ class Transcriber extends Component {
             .then(
                 (res) => {
                     if (res.length === 0) {
-                        console.log("You must be using an active Spotify session.");
                         this.setState({ active: false });
                     } else {
-                        console.log("Success!");
                         this.setState({
                             loggedIn: true,
                             active: true,
@@ -189,7 +189,6 @@ class Transcriber extends Component {
                         this.getTrackInfo();
                     }
                 }, () => {
-                    console.log("Not logged in!");
                     this.setState({ loggedIn: false })
                 }).catch(e => { console.log() })
     }
@@ -260,7 +259,7 @@ class Transcriber extends Component {
             }).catch(e => { console.log() })
     }
     checkCurrent() {
-        setInterval(() => {
+        this.checkPlayback = setInterval(() => {
             if (this.state.loggedIn && this.state.active) {
                 spotifyApi.getMyCurrentPlaybackState()
                     .then(res => {
@@ -303,6 +302,9 @@ class Transcriber extends Component {
         window.addEventListener("keypress", (e) => {
             this.handKeyPress(e);
         });
+    }
+    componentWillUnmount() {
+        clearInterval(this.checkPlayback);
     }
     point(ms) {
         let left = `${(((ms - 1000) / this.state.duration) * 90) + 5}%`;
