@@ -8,6 +8,7 @@ import TimeStamp from './timestamp';
 import Controls from './controls';
 import '../css/transcriber.css';
 import Footer from './footer';
+import logo from '../assets/transcribifi-logo.png';
 
 const spotifyApi = new Spotify();
 const CHECK_INTERVAL = 400;         // Interval to update timeStamp
@@ -324,7 +325,11 @@ class Transcriber extends Component {
                 <div
                     className="main"
                 >
-                    <h1 id="header">Transcribifi</h1>
+                    <div className="header-logo">
+                        <img src={logo}></img>
+                        <h1 id="header">Transcribifi</h1>
+                    </div>
+
                     <TrackInfo info={this.state.trackInfo} />
                     <TimeStamp className="timestamp" timeStamp={this.state.timeStamp} />
                     <Slider

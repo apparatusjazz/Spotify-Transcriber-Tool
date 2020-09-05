@@ -17,6 +17,7 @@ h2 {
 
 #header {
     padding-top: 5vh;
+    display: inline-block;
 }
 
 @media screen and ((max-width: 600px) or (max-height: 630px)) {
@@ -48,4 +49,10 @@ html, body, #app, #app>div {
 }
 #login-btn:active {
     background-color: rgb(54, 54, 54);
+}
+
+
+.header-logo img {
+    width: 50px;
+    padding-right: 10px;
 }
