@@ -82,6 +82,7 @@ class Transcriber extends Component {
 
     }
     savePoint() {
+        let t1 = performance.now(); //Measuring interval to save point
         spotifyApi.getMyCurrentPlaybackState()
             .then(
                 (res) => {
@@ -89,8 +90,8 @@ class Transcriber extends Component {
                     if (!points.includes(res.progress_ms) && !this.state.playing) {
                         points.push(res.progress_ms);
                     }
-                    else if (!points.includes(res.progress_ms - 500) && res.progress_ms > 500) {
-                        points.push(res.progress_ms - 500);
+                    else {
+                        points.push(res.progress_ms - Math.floor(performance.now() - t1));
                     }
                     points.sort((a, b) => { return a - b });
                     this.setState({ savedPoints: points });
